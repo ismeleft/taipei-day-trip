@@ -65,7 +65,10 @@ def getAttractions():
 
             a_page_items = 12
             total_pages = (total_data + a_page_items - 1) // a_page_items
-            next_page = page + 1 if page < total_pages else None
+            if page < total_pages-1:
+                next_page = page + 1
+            else:
+                next_page = None
 
             query_data = f"SELECT * FROM trip LIMIT {a_page_items} OFFSET {page * a_page_items}"
             cursor.execute(query_data)
@@ -110,7 +113,10 @@ def getAttractions():
             a_page_items = 12
             total_pages = (search_data_count +
                            a_page_items - 1) // a_page_items
-            next_page = page + 1 if page < total_pages else None
+            if page < total_pages-1:
+                next_page = page + 1
+            else:
+                next_page = None
 
             search_query = '''
                 SELECT * FROM trip 

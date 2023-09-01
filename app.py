@@ -70,8 +70,8 @@ def getAttractions():
             else:
                 next_page = None
 
-            query_data = f"SELECT * FROM trip LIMIT {a_page_items} OFFSET {page * a_page_items}"
-            cursor.execute(query_data)
+            query_data = "SELECT * FROM trip LIMIT %s OFFSET %s"
+            cursor.execute(query_data, (a_page_items, page*a_page_items))
             all_data = cursor.fetchall()
 
             data = []
@@ -101,13 +101,12 @@ def getAttractions():
 
             search_query_count = '''
                 SELECT COUNT(*) FROM trip 
-                WHERE name LIKE %s OR category LIKE %s OR description LIKE %s 
-                OR address LIKE %s OR mrt LIKE %s
+                WHERE name LIKE %s OR mrt LIKE %s
             '''
-
+            totally_keyword_pattern = f"%{keyword}"
             keyword_pattern = f"%{keyword}%"
-            cursor.execute(search_query_count, (keyword_pattern, keyword_pattern,
-                           keyword_pattern, keyword_pattern, keyword_pattern))
+            cursor.execute(search_query_count,
+                           (keyword_pattern, totally_keyword_pattern))
             search_data_count = cursor.fetchone()[0]
 
             a_page_items = 12
@@ -120,13 +119,12 @@ def getAttractions():
 
             search_query = '''
                 SELECT * FROM trip 
-                WHERE name LIKE %s OR category LIKE %s OR description LIKE %s 
-                OR address LIKE %s OR mrt LIKE %s 
+                WHERE name LIKE %s OR mrt LIKE %s
                 LIMIT %s OFFSET %s
             '''
 
-            cursor.execute(search_query, (keyword_pattern, keyword_pattern, keyword_pattern,
-                           keyword_pattern, keyword_pattern, a_page_items, page * a_page_items))
+            cursor.execute(search_query, (keyword_pattern,
+                           totally_keyword_pattern, a_page_items, page * a_page_items))
             all_data = cursor.fetchall()
 
             data = []

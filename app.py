@@ -221,4 +221,4 @@ def mrts():
         return "資料庫錯誤", 500
 
 
-app.run(host="0.0.0.0", port=300)
+app.run(host="0.0.0.0", port=3000)

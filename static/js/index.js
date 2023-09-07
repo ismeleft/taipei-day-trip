@@ -3,6 +3,8 @@ let nextPage =0 ;
 let attractionSize = 12;
 let keyword;
 
+//list-bar滾動軸處理
+
 let listBar = document.querySelector(".list-bar");
 let buttonPrev = document.querySelector(".btn-prev");
 let buttonNext = document.querySelector(".btn-next");
@@ -16,7 +18,6 @@ buttonPrev.addEventListener("click", () => {
     return
   }
   currentIndex -= 1 / data.data[0].length;
-  console.log(currentIndex);
   slideMrt(currentIndex, data); 
 });
 
@@ -36,13 +37,13 @@ buttonNext.addEventListener("click", () => {
   }
 
   currentIndex += 1 / data.data[0].length;
-  console.log(currentIndex);
   slideMrt(currentIndex, data); 
 });
 
 const slideMrt = (currentIndex, data) => { 
   // 計算更新的 index 值
   currentIndex = (currentIndex + data.data[0].length) % data.data[0].length;
+  console.log(currentIndex);
   if (window.innerWidth < 600 ){
     carousel.style.transform = `translate(-${(currentIndex)* 3*100}%)`;
   }else if(window.innerWidth < 1200){ 
@@ -61,7 +62,6 @@ function getMrt() {
     .then((response) => response.json())
     .then((responseData) => {
       data = responseData; 
-      console.log(data.data[0]);
 
       carousel.innerHTML = "";
 
@@ -147,7 +147,6 @@ function getData(url) {
 
             // 更新 nextPage
             nextPage = data.nextPage; 
-            console.log(nextPage);
             if (nextPage === null) {
                 observer.unobserve(footer);
             }

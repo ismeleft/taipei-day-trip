@@ -129,13 +129,12 @@ img.arrowPic{
 }
 .listItem-container{
     display: flex;
-    /* justify-content: space-around; */
-    overflow: hidden; /* 如果文字超出容器寬度，則隱藏溢出部分 */
+    overflow: hidden; 
 
 }
 .carousel{
     display: inline-block;
-    white-space: nowrap; /* 防止文字換行 */
+    white-space: nowrap; 
     transition: all 0.4s ease;
     color: #757575;   
 }
@@ -234,6 +233,8 @@ p.footer{
         padding: 0px 0px 0px 15px ;
     }
     .slogan{
+        width: 100%;
+        padding: 10px;
         justify-content: center;
 
     }

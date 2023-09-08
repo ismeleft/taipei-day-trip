@@ -113,6 +113,7 @@ input{
 }
 
 img.search{
+    pointer-events: none;
     width: 30px;
     height: 30px;
 }
@@ -163,13 +164,13 @@ span:hover{
 
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 40px;
 }
 
 .attractionCard{
     background-color: #fff;
     width: 270px;
-    margin-bottom: 40px;
     border-radius: 5px 5px 5px 5px;
     border: solid 1px #E8E8E8;
     position: relative;
@@ -264,7 +265,7 @@ p.footer{
  
     .attractionCard{
         width: 100%;
-        margin-bottom: 40px;
+    
     }
 
     

@@ -164,8 +164,7 @@ span:hover{
 
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 40px;
+    justify-content: space-between;
 }
 
 .attractionCard{
@@ -174,6 +173,7 @@ span:hover{
     border-radius: 5px 5px 5px 5px;
     border: solid 1px #E8E8E8;
     position: relative;
+    margin-bottom: 40px;
 
 
 }

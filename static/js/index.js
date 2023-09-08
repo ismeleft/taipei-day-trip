@@ -1,7 +1,7 @@
 let fetching = false;
 let nextPage = 0;
 let attractionSize = 12;
-let keyword;
+let keyword ="";
 
 let listBar = document.querySelector(".list-bar");
 let buttonPrev = document.querySelector(".btn-prev");
@@ -165,20 +165,26 @@ function infiniteScroll(entries) {
   });
 }
 
-//keyword search
-const searchBtn = document.querySelector(".searchBtn");
-searchBtn.addEventListener("click", () => {
-  const searchInput = document.querySelector("#searchInput").value;
+// keyword search
+const searchBtn = document.querySelector('.searchBtn');
+searchBtn.addEventListener('click', () => {
+  const searchInput = document.querySelector('#searchInput').value.trim(); // Remove leading/trailing whitespace
   keyword = searchInput;
   nextPage = 0;
-  attraction.innerHTML = "";
+  attraction.innerHTML = '';
   searchAttractions(searchInput);
 });
 
 function searchAttractions(stationName) {
-  keyword = stationName;
-  nextPage = 0;
-  attraction.innerHTML = "";
+  if (!stationName) {
+    // If the search input is empty, reset to show all attractions
+    keyword = '';
+    nextPage = 0;
+  } else {
+    keyword = stationName;
+    nextPage = 0;
+  }
+  attraction.innerHTML = '';
 
   if (!keyword) {
     fetchAttractions(`/api/attractions?page=${nextPage}`);
@@ -186,7 +192,6 @@ function searchAttractions(stationName) {
     fetchAttractions(`/api/attractions?page=${nextPage}&keyword=${encodeURIComponent(keyword)}`);
   }
 }
-
 // 錯誤訊息的提醒
 function displayErrorMessage(message) {
   attraction.innerHTML = "";

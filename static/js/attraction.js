@@ -121,7 +121,8 @@ window.addEventListener("load", () => {
 let slideIndex =0;
 let leftArrow = document.querySelector(".left-arrow");
 let rightArrow = document.querySelector(".right-arrow");
-
+// let translateXValue = 0; 
+// const imageWidth = 540;
 function showSlide(){
     let imgs = document.querySelectorAll(".attraction-image")
     let dots = document.querySelectorAll(".dot");
@@ -133,6 +134,8 @@ function showSlide(){
     if(slideIndex<0){
         slideIndex=imgCount-1;
     }
+    // translateXValue = -slideIndex * imageWidth;
+    // attractionImgContainer.style.transform = `translateX(${translateXValue}px)`;
     for(let i =0;i <imgCount;i++){
         dots[i].classList.remove("active");
         imgs[i].style.display="none";

@@ -1,10 +1,8 @@
 let fetching = false;
 let nextPage =0 ;
-let attractionSize = 12;
 let keyword;
 
-//list-bar滾動軸處理
-
+//建立list-bar，左右滾動的功能
 let listBar = document.querySelector(".list-bar");
 let buttonPrev = document.querySelector(".btn-prev");
 let buttonNext = document.querySelector(".btn-next");
@@ -18,6 +16,7 @@ buttonPrev.addEventListener("click", () => {
     return
   }
   currentIndex -= 1 / data.data[0].length;
+  console.log(currentIndex);
   slideMrt(currentIndex, data); 
 });
 
@@ -37,13 +36,11 @@ buttonNext.addEventListener("click", () => {
   }
 
   currentIndex += 1 / data.data[0].length;
+  console.log(currentIndex);
   slideMrt(currentIndex, data); 
 });
 
-const slideMrt = (currentIndex, data) => { 
-  // 計算更新的 index 值
-  currentIndex = (currentIndex + data.data[0].length) % data.data[0].length;
-  console.log(currentIndex);
+const slideMrt = (currentIndex) => { 
   if (window.innerWidth < 600 ){
     carousel.style.transform = `translate(-${(currentIndex)* 3*100}%)`;
   }else if(window.innerWidth < 1200){ 
@@ -53,25 +50,23 @@ const slideMrt = (currentIndex, data) => {
   }
 };
 
-
-
-
 // 抓取 api/mrts 的資料
 function getMrt() {
   fetch("/api/mrts")
     .then((response) => response.json())
     .then((responseData) => {
       data = responseData; 
+      console.log(data.data[0]);
 
       carousel.innerHTML = "";
 
- 
+      //每個捷運站名都用 span 包起來
       data.data[0].forEach((station) => {
         let spanElement = document.createElement("span");
         spanElement.textContent = station;
         carousel.appendChild(spanElement);
 
-
+        // 點選 span 時，searchInput = station -> 執行搜尋
         spanElement.addEventListener("click", () => {
           document.querySelector("#searchInput").value = station;
           searchAttractions(station);
@@ -85,7 +80,7 @@ getMrt();
 function searchAttractions(stationName) {
   keyword = stationName; 
   nextPage = 0; 
-  attraction.innerHTML = ''; 
+  attraction.innerHTML = ""; 
 
   if (!keyword) {
     fetchData(`/api/attractions?page=${nextPage}`);
@@ -94,46 +89,66 @@ function searchAttractions(stationName) {
   }
 }
 
+//關鍵字搜尋
+const searchBtn = document.querySelector(".searchBtn")
+searchBtn.addEventListener("click",()=>{
+  const searchInput = document.querySelector("#searchInput").value;
+  keyword = searchInput; 
+  nextPage = 0; 
+  attraction.innerHTML = ''; 
+  searchAttractions(searchInput);
+  observer.observe(footer);
 
-
-let attraction = document.querySelector(".attraction");
-
-function fetchData(url) {
-  if(!fetching){
-    fetching = true;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            fetching = false;
-            if(data.data.length ===0){
-              displayErrorMessage("找不到搜尋結果，請重試");
-            }else{
-              getData(data);
-              fetching = false;
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            fetching = false;
-        });
-
+})
+//關鍵字搜尋－enter
+searchInput.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    const searchValue = searchInput.value;
+    keyword = searchValue;
+    nextPage = 0;
+    attraction.innerHTML = "";
+    searchAttractions(searchValue);
+    observer.observe(footer);
   }
+});
 
+//從api/atrractions抓資料
+function fetchData(url) {
+  fetching = true;
+  fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          fetching = false;
+          if(data.data.length ===0){
+            displayErrorMessage(`找不到 ${keyword} 的搜尋結果，請重試`);
+          }else{
+            getData(data);
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching data:', error);
+          fetching = false;
+      });
 }
 
 
+//創建attraction區塊
+let attraction = document.querySelector(".attraction");
 function getData(data) {
-
   for (let index = 0; index < data.data.length; index++) {
       // 創建attractionCard
       let attractionCard = document.createElement("div");
       attractionCard.setAttribute("class", "attractionCard");
+      //連結到/attraction/id
+      attractionCard.addEventListener("click",()=>{
+        let attractionId = data.data[index].id;
+        window.location.href=`/attraction/${attractionId}`
+      })
 
       // 圖片區域 attractionCard > img
       let atrractionImg = document.createElement("img");
       attractionCard.appendChild(atrractionImg);
 
-      // 將圖片網址切到只剩第一個圖片
       let src = data.data[index].images[0].split(',')[0];
       atrractionImg.setAttribute("src", src);
 
@@ -167,15 +182,13 @@ function getData(data) {
 
   // 更新 nextPage
   nextPage = data.nextPage; 
+  console.log(nextPage);
   if (nextPage === null) {
       observer.unobserve(footer);
   }
 
-  fetching = false;
-;
+
 }
-
-
 
 // infinite scroll
 const options = {
@@ -185,39 +198,25 @@ const options = {
 };
 
 const footer = document.querySelector("footer");
-
 const observer = new IntersectionObserver(infiniteScroll, options);
 observer.observe(footer);
 
 function infiniteScroll(entries) {
-  entries.forEach((entry) => {
-      if (entry.isIntersecting && !fetching) {
-          if (!keyword) {
-              const url = `/api/attractions?page=${nextPage}`;
-              fetchData(url);
-          } else {
-              const url = `/api/attractions?page=${nextPage}&keyword=${encodeURIComponent(keyword)}`;
-              fetchData(url);
-          }
-          nextPage++;
-          fetching = true; 
-      }
-  });
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            if (fetching === false) {
+                if (!keyword) {
+                    const url = `/api/attractions?page=${nextPage}`; 
+                    fetchData(url);
+                } else {
+                    const url = `/api/attractions?page=${nextPage}&keyword=${encodeURIComponent(keyword)}`;
+                    fetchData(url);
+                }
+            }
+        }
+    });
 }
 
-
-getData();
-
-//keyword search
-const searchBtn = document.querySelector(".searchBtn")
-searchBtn.addEventListener("click",()=>{
-  const searchInput = document.querySelector("#searchInput").value;
-  keyword = searchInput; 
-  nextPage = 0; 
-  attraction.innerHTML = ''; 
-  searchAttractions(searchInput);
-
-})
 
 // 錯誤訊息的提醒
 function displayErrorMessage(message) {
@@ -228,4 +227,3 @@ function displayErrorMessage(message) {
   errorMessage.textContent = message;
   attraction.appendChild(errorMessage);
 }
-

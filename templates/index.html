@@ -7,22 +7,11 @@
     <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
-    <nav>
-        <div class="nav-bar">
-            <div class="nav-sitename"><a href="/">台北一日遊</a></div>  
-            <div class="nav-buttons">
-                <div class="nav-button">預定行程</div>
-                <div class="nav-button">登入/註冊</div>
-            </div>
-
-        </div>
-
-
-    </nav>
+    {% include 'base.html' %}
     <section>
         <div class="slogan">
             <h1>輕鬆享受台北一日悠閒</h1>
-            <p>探索每個角落，體驗城市的深度旅遊行程</p>
+            <p class="slogan-text">探索每個角落，體驗城市的深度旅遊行程</p>
 
             <div class="search-bar">
                 <input type="text" placeholder="輸入景點名稱查詢" id="searchInput">
@@ -52,13 +41,13 @@
         <div class="attraction">
 
         </div>
-    
     </main>
     <footer>
         <p class="footer">
             COPYRIGHT © 2023 台北一日遊
         </p>
     </footer>
-    <script src="../static/js/index.js"></script>
+    <script src="/static/js/index.js"></script>
+    <script src="/static/js/member.js"></script>
 </body>
 </html>

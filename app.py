@@ -1,6 +1,10 @@
 from flask import *
 import mysql.connector
 from mysql.connector import pooling
+from flask_bcrypt import Bcrypt
+import jwt
+from datetime import datetime, timedelta
+
 
 app = Flask(__name__,
             static_folder='static',
@@ -26,6 +30,9 @@ pool_config = {
 connection_pool = mysql.connector.pooling.MySQLConnectionPool(
     **db_config, **pool_config)
 
+bcrypt = Bcrypt()
+
+key = "secret"
 
 # Pages
 
@@ -60,97 +67,48 @@ def getAttractions():
         conn = connection_pool.get_connection()
         cursor = conn.cursor()
 
-        if keyword == None:
-            query_count = "SELECT COUNT(*) FROM trip"
-            cursor.execute(query_count)
-            total_data = cursor.fetchone()[0]
+        a_page_items = 12
 
-            a_page_items = 12
-            total_pages = (total_data + a_page_items - 1) // a_page_items
-            if page < total_pages-1:
-                next_page = page + 1
-            else:
-                next_page = None
-
+        if keyword is None:
             query_data = "SELECT * FROM trip LIMIT %s OFFSET %s"
-            cursor.execute(query_data, (a_page_items, page*a_page_items))
+            cursor.execute(query_data, (a_page_items + 1, page * a_page_items))
             all_data = cursor.fetchall()
-
-            data = []
-            for item in all_data:
-                data.append({
-                    "id": item[0],
-                    "name": item[1],
-                    "category": item[2],
-                    "description": item[3],
-                    "address": item[4],
-                    "transport": item[5],
-                    "mrt": item[6],
-                    "lat": item[7],
-                    "lng": item[8],
-                    "images": [item[9]]
-                })
-
-            cursor.close()
-            conn.close()
-
-            return jsonify({
-                "nextPage": next_page,
-                "data": data,
-            }), 200
-
         else:
-
-            search_query_count = '''
-                SELECT COUNT(*) FROM trip 
-                WHERE name LIKE %s OR mrt LIKE %s
-            '''
-            totally_keyword_pattern = f"%{keyword}"
-            keyword_pattern = f"%{keyword}%"
-            cursor.execute(search_query_count,
-                           (keyword_pattern, totally_keyword_pattern))
-            search_data_count = cursor.fetchone()[0]
-
-            a_page_items = 12
-            total_pages = (search_data_count +
-                           a_page_items - 1) // a_page_items
-            if page < total_pages-1:
-                next_page = page + 1
-            else:
-                next_page = None
-
             search_query = '''
                 SELECT * FROM trip 
                 WHERE name LIKE %s OR mrt LIKE %s
                 LIMIT %s OFFSET %s
             '''
-
+            totally_keyword_pattern = f"%{keyword}"
+            keyword_pattern = f"%{keyword}%"
             cursor.execute(search_query, (keyword_pattern,
-                           totally_keyword_pattern, a_page_items, page * a_page_items))
+                           totally_keyword_pattern, a_page_items + 1, page * a_page_items))
             all_data = cursor.fetchall()
 
-            data = []
-            for item in all_data:
-                data.append({
-                    "id": item[0],
-                    "name": item[1],
-                    "category": item[2],
-                    "description": item[3],
-                    "address": item[4],
-                    "transport": item[5],
-                    "mrt": item[6],
-                    "lat": item[7],
-                    "lng": item[8],
-                    "images": [item[9]]
-                })
+        data = []
+        for item in all_data[:12]:
+            data.append({
+                "id": item[0],
+                "name": item[1],
+                "category": item[2],
+                "description": item[3],
+                "address": item[4],
+                "transport": item[5],
+                "mrt": item[6],
+                "lat": item[7],
+                "lng": item[8],
+                "images": [item[9]]
+            })
 
-            cursor.close()
-            conn.close()
+        cursor.close()
+        conn.close()
 
-            return jsonify({
-                "nextPage": next_page,
-                "data": data
-            }), 200
+        has_next_page = len(all_data) > 12
+
+        return jsonify({
+            "nextPage": page + 1 if has_next_page else None,
+            "data": data,
+        }), 200
 
     except mysql.connector.Error as err:
         print("資料庫錯誤：", err)
@@ -221,4 +179,126 @@ def mrts():
         return "資料庫錯誤", 500
 
 
+# 會員註冊api
+@app.route("/api/user", methods=["POST"])
+def signup():
+    try:
+        username = request.json.get("name")
+        email = request.json.get("email")
+        password = request.json.get("password")
+        print(username, email, password)
+
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
+
+        if username == "" or email == "" or password == "":
+            cursor.close()
+            return jsonify({
+                "error": True,
+                "message": "請輸入對應的資訊"
+            })
+
+        query = "SELECT * FROM users WHERE email = %s "
+        cursor.execute(query, (email,))
+        existing_member = cursor.fetchone()
+        if existing_member != None:
+            cursor.close()
+            return jsonify({
+                "error": True,
+                "message": "註冊失敗，email已被註冊"
+            }), 400
+        else:
+            hashed_password = bcrypt.generate_password_hash(
+                password=password)
+            insertQuery = "INSERT INTO users(username,email,password) VALUES(%s,%s,%s)"
+            cursor.execute(insertQuery, (username, email, hashed_password))
+            conn.commit()
+            cursor.close()
+            conn.close()
+
+            return jsonify({"ok": "true"}), 200
+
+    except mysql.connector.Error as err:
+        print(f"MYSQL Error:{err}")
+        return jsonify({
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }), 500
+    finally:
+        if cursor is not None:
+            cursor.close()
+
+# 取得當前登入的資訊
+
+
+@app.route("/api/user/auth", methods=["GET"])
+def get_login_status():
+    token = request.headers.get("Authorization")
+    if token:
+        try:
+            token = token.split("Bearer ")[-1]
+            user = jwt.decode(token, key, algorithms="HS256")
+            return jsonify({
+                "data": {
+                    "id": user["id"],
+                    "name": user["name"],
+                    "email": user["email"]}
+            }), 200
+        except jwt.ExpiredSignatureError:
+            return jsonify({
+                "data": None,
+                "message": "Token已過期"
+            }), 401
+        except jwt.InvalidTokenError:
+            return jsonify({
+                "data": None,
+                "message": "Token無效"
+            }), 401
+    else:
+        return jsonify({
+            "data": None,
+            "message": "未提供Token"
+        }), 401
+
+
+# 登入會員帳戶
+@app.route("/api/user/auth", methods=["PUT"])
+def login():
+    try:
+        email = request.json["email"]
+        password = request.json["password"]
+
+        if email == "" or password == "":
+            return jsonify({
+                "error": True,
+                "message": "請輸入對應的資訊"
+            })
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
+        query = "SELECT * FROM users WHERE email=%s"
+        cursor.execute(query, (email,))
+        existing_member = cursor.fetchone()
+        exp_time = datetime.utcnow() + timedelta(days=7)
+
+        if existing_member and bcrypt.check_password_hash(existing_member[3], password):
+            token = jwt.encode({"id": existing_member[0],
+                                "name": existing_member[1],
+                                "email": existing_member[2],
+                                "exp": exp_time}, key, algorithm="HS256")
+            return jsonify({
+                "token": token
+            }), 200
+        else:
+            return jsonify({
+                "error": True,
+                "message": "登入失敗，email或密碼錯誤"
+            }), 400
+    except mysql.connector.Error as err:
+        return jsonify({
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }), 500
+
+
 app.run(host="0.0.0.0", port=3000)
+app.debug = True

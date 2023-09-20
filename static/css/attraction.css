@@ -31,56 +31,30 @@
 }
 
 
-/* nav區塊 */
+nav區塊
 
 nav{
-    height: 54px;
-    padding: 10px 0px;
-    align-items: center;
-    background-color: #fff;
+
     border-bottom:1px solid #E8E8E8 ;
     
 }
 
-.nav-bar{
-    max-width: 1200px;
-    display: flex;
-    margin: 0 auto;
+
+/* 會員登入 */
+.dialog{
+    z-index: 2;
+   
 }
 
-.nav-buttons{
-    display: flex;
-    flex: auto;
-    justify-content: flex-end;
-}
-
-.nav-button{
-    display: flex;
-    align-items: center;
-    padding: 0px 10px;
-    color: #666666;
-    font-weight: 400;
+.login-email,.login-password,.signup-email,.signup-password,.signup-name{
+    height: 47px;
+    padding-left: 10px;
 
 }
 
+.dialog-signup{
+    z-index: 2;
 
-.nav-sitename {
-
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 34px; 
-}
-
-a{
-    text-decoration: none;
-    color: #448899;
-}
-
-button{
-    background-color: #fff;
-    border: none;
-    cursor: pointer;
 }
 
 /* section區塊 */
@@ -93,20 +67,25 @@ section{
 .attraction-carousel{
     width: 540px;
     position: relative;
+    overflow: hidden;
 
 }
 .attractionImg-container{
     display: flex;
     width: 540px;
     height: 400px;
+    transition: 0.4s all ease;
 
 }
-.attraction-image{
+.attraction-image {
     width: 100%;
     height: 100%;
     border-radius: 5px;
-    object-fit: cover;
+    object-fit: cover; 
+    flex-shrink: 0;
+    
 }
+
 .left-arrow{
     position: absolute;
     top: 50%;
@@ -171,12 +150,33 @@ section{
     padding: 15px 20px 41px 20px;
     
 }
-input[type="date"]{
+/* .booking-date{
     width: 193px;
     height: 35px;
     border: none;
     padding: 5px;
+    font-weight: 500;
+    font-size: 16px;
+
+} */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
 }
+input[type="date"]{
+    background-image: url("/static/img/calendar.png");
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position-x: 95%;
+    background-position-y:30%;
+    width: 193px;
+    height: 35px;
+    border: none;
+    padding: 5px;
+    font-weight: 500;
+    font-size: 16px;
+    
+}
+
 
 input[type="radio"]{
     outline: none;

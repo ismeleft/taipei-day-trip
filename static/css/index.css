@@ -7,56 +7,8 @@
     box-sizing: border-box;
     font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
 }
-
-/* nav區塊 */
-
-nav{
-    height: 54px;
-    padding: 10px 0px;
-    align-items: center;
-    background-color: #fff;
-    
-}
-
-.nav-bar{
-    max-width: 1200px;
-    display: flex;
-    margin: 0 auto;
-}
-
-.nav-buttons{
-    display: flex;
-    flex: auto;
-    justify-content: flex-end;
-}
-
-.nav-button{
-    display: flex;
-    align-items: center;
-    padding: 0px 10px;
-    color: #666666;
-    font-weight: 400;
-
-}
-
-
-.nav-sitename {
-
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 34px; 
-}
-
-a{
-    text-decoration: none;
-    color: #448899;
-}
-
-button{
-    background-color: #fff;
-    border: none;
-    cursor: pointer;
+body{
+    position: relative;
 }
 
 /* section 區塊 */
@@ -88,7 +40,7 @@ h1{
     font-size: 28px;
     margin-bottom: 15px;
 }
-p{
+.slogan-text{
     color: #F8F8F8;
     font-size: 16px;
     margin-bottom: 25px;
@@ -216,7 +168,6 @@ img{
     margin: 0 auto;
     color: #757575;
 }
-
 /* footer 區塊 */
 footer{
     height: 104px;
@@ -230,6 +181,8 @@ p.footer{
     color:#FFFFFF;
     font-weight: 700;
 }
+
+
 
 @media screen and (max-width:1200px){
     .nav-bar{

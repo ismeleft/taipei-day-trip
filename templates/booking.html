@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taipei Day Trip</title>
+    <link rel="stylesheet" href="/static/css/booking.css" />
+  </head>
+  <body>
+    {% include 'base.html' %}
+    <div class="headline">
+      您好，<span class="login-username"></span>，待預定的行程如下
+    </div>
+    <div class="booking-wrapper">
+      <section class="booking">
+        <img src="" alt="" class="booking-img" />
+        <div class="booking-info">
+          <div class="booking-info-title"></div>
+          <div class="booking-info-date"></div>
+          <div class="booking-info-time"></div>
+          <div class="booking-info-address"></div>
+          <img
+            class="trash-button"
+            src="/static/img/trash button.png"
+            alt=""
+            srcset=""
+          />
+        </div>
+      </section>
+      <div class="contact-form">
+        <div class="contact-form-title">您的聯絡資訊</div>
+        聯絡姓名：<input type="text" class="contact-form-name" required /><br />
+        聯絡信箱：<input
+          type="email"
+          class="contact-form-email"
+          required
+        /><br />
+        手機號碼：<input type="tel" class="contact-form-phone" required />
+        <p class="contact-form-hint">
+          請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
+        </p>
+      </div>
+      <div class="payment">
+        <div class="payment-title">信用卡付款資訊</div>
+        卡片號碼：<input
+          type="tel"
+          class="payment-number"
+          pattern="\d*"
+          maxlength="19"
+          placeholder="**** **** **** ****"
+          required
+        /><br />
+        過期時間：<input
+          type="tel"
+          class="payment-exp"
+          placeholder="MM / YY"
+          pattern="\d*"
+          maxlength="7"
+          required
+        /><br />
+        驗證密碼：<input
+          type="password"
+          class="payment-password"
+          pattern="\d*"
+          maxlength="4"
+          placeholder="CVC"
+        />
+      </div>
+      <div class="confirm">
+        <div class="confirm-payment">總價：</div>
+        <button class="confirm-btn">確認訂購並付款</button>
+      </div>
+    </div>
+    <div class="no-booking-message" style="display: none">
+      目前沒有任何待預訂的行程
+    </div>
+
+    <footer>
+      <p class="footer">COPYRIGHT © 2023 台北一日遊</p>
+    </footer>
+    <script src="/static/js/booking.js"></script>
+    <script src="/static/js/member.js"></script>
+  </body>
+</html>

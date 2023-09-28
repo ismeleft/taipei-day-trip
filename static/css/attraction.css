@@ -67,14 +67,14 @@ section{
 .attraction-carousel{
     width: 540px;
     position: relative;
-    /* overflow: hidden; */
+    overflow: hidden;
 
 }
 .attractionImg-container{
     display: flex;
     width: 540px;
     height: 400px;
-    /* transition: 0.4s all ease; */
+    transition: 0.4s all ease;
 
 }
 .attraction-image {
@@ -89,6 +89,7 @@ section{
 .left-arrow{
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
     left: 10px;
     width: 32px;
     height: 32px;
@@ -98,6 +99,7 @@ section{
     width: 32px;
     height: 32px;
     top: 50%;
+    transform: translateY(-50%);
     right: 10px;
     opacity: 0.75;
 }
@@ -238,6 +240,9 @@ input[type="radio"]:checked:after {
     cursor: pointer;
     font-weight: 400;
     font-size: 19px;
+}
+.booking-error-hint{
+    margin-top: 10px;
 }
 
 /* info區塊 */

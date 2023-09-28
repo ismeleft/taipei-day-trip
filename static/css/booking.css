@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+
+.booking-wrapper,
+.headline,
+.no-booking-message {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+.booking-wrapper {
+  display: none;
+}
+.no-booking-message {
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: #666;
+}
+.headline {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+}
+section.booking {
+  position: relative;
+  display: flex;
+  padding-bottom: 40px;
+  border-bottom: #e8e8e8 1px solid;
+}
+.booking-img {
+  width: 266px;
+  height: 200px;
+  object-fit: cover;
+  margin-right: 22px;
+}
+.booking-info-title {
+  color: #489;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+.booking-info-date,
+.booking-info-time,
+.booking-info-address {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 15px;
+}
+.trash-button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  right: 110px;
+  cursor: pointer;
+}
+.contact-form,
+.payment {
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+}
+.contact-form-title {
+  margin-top: 44px;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  margin-bottom: 30px;
+}
+.contact-form-name,
+.contact-form-email,
+.contact-form-phone,
+.payment-number,
+.payment-exp,
+.payment-password {
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+.contact-form-hint {
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  padding-bottom: 45px;
+  border-bottom: #e8e8e8 1px solid;
+}
+.payment-title {
+  color: #666;
+  margin-top: 40px;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  margin-bottom: 30px;
+}
+.confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-top: #e8e8e8 1px solid;
+  margin-top: 30px;
+  padding-top: 30px;
+}
+.confirm-payment {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  color: #666666;
+}
+.confirm-btn {
+  border-radius: 5px;
+  background-color: #489;
+  border: none;
+  padding: 10px 20px;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  color: #ffffff;
+  margin-top: 32px;
+  margin-bottom: 62px;
+  cursor: pointer;
+}
+
+/* footer 區塊 */
+footer {
+  height: 104px;
+  padding: 40px 0px;
+  text-align: center;
+  background-color: #757575;
+}
+
+p.footer {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1200px) {
+  .booking-wrapper,
+  .headline,
+  .no-booking-message {
+    width: 90%;
+  }
+  .trash-button {
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  section.booking {
+    flex-wrap: wrap;
+  }
+  .booking-img {
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 20px;
+  }
+  .trash-button {
+    right: 0;
+    transform: translateY(1250%);
+  }
+}

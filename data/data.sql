@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `booking`
+--
+
+DROP TABLE IF EXISTS `booking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `booking` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `trip_id` bigint NOT NULL,
+  `date` date NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `price` varchar(20) NOT NULL,
+  `users_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `trip_id` (`trip_id`),
+  KEY `users_id` (`users_id`),
+  CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`id`),
+  CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `booking`
+--
+
+LOCK TABLES `booking` WRITE;
+/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `trip`
 --
 
@@ -60,19 +91,12 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `users`
 --
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'mmm','mmm@mmm.com','$2b$12$VETK612Gv4DvndhCQFmaeOzBxKOfXLO8UKNKiAFZfQof5aMCPR3M.'),(2,'aaa','aaa@aaa.com','$2b$12$HmGx8umgBi5E3XL1MbtfLOmM65snh9L3D05K6WVpM0peg0JR0AtvG'),(3,'bbb','bbb@bbb.com','$2b$12$LFELET7pfEtFuaVkSz8ULeNne1MZxGeay8UDrWFGMttCtQ3TqbmB6'),(4,'qqq','qqq@qqq.com','$2b$12$wuV9HWIXoIVfQm.y6yY39OqJhePmXsW9xR5ZZJZTVcaa2MUSxdZry'),(5,'ccc','ccc@ccc.com','$2b$12$5H98Ir9gGurIKfeU2r02zuONmUzXHE.OpoHDfzO8lQz/.TvHrNnYq'),(6,'ppp','ppp@ppp.com','$2b$12$Pqzd87sd4LR4rbZrhNcUbetNNC13oaniqX6D7pUXPQCK2jM0ymdyG'),(7,'zzz','zzz@zzz.com','$2b$12$0qKVnlbfcENCwSxY.D8r1.XIVQrTQWPt0ciP1AZmvEU8uwlrDzfty');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -82,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-21 11:25:46
+-- Dump completed on 2023-09-28 12:18:00

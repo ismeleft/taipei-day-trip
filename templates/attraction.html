@@ -1,52 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taipei Day Trip</title>
-    <link rel="stylesheet" href="/static/css/attraction.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/static/css/attraction.css" />
+  </head>
+  <body>
     {% include 'base.html' %}
     <section>
-        <div class="attraction-carousel">
-            <div class="attractionImg-container"></div>
-            <img class="left-arrow" src="/static/img/left arrow.png" alt="" srcset="">
-            <img class="right-arrow" src="/static/img/btn_rightArrow.png" alt="" srcset="">
-            <div class="dot-container"></div>
+      <div class="attraction-carousel">
+        <div class="attractionImg-container"></div>
+        <img
+          class="left-arrow"
+          src="/static/img/left arrow.png"
+          alt=""
+          srcset=""
+        />
+        <img
+          class="right-arrow"
+          src="/static/img/btn_rightArrow.png"
+          alt=""
+          srcset=""
+        />
+        <div class="dot-container"></div>
+      </div>
 
-        </div>
-       
+      <div class="profile">
+        <form action="" class="booking">
+          <p class="booking-title bold margin-bottom-15">訂購導覽行程</p>
+          <p class="booking-description normal margin-bottom-15">
+            以此景點為中心的一日行程，帶您探索城市角落故事
+          </p>
+          <p class="booking-date bold margin-bottom-15">
+            選擇日期：<input
+              type="date"
+              name="booking-date"
+              id="custom-calendar"
+              required
+            />
+          </p>
+          <div class="booking-time bold">
+            選擇時間：
+            <label class="booking-time-morning normal">
+              <input
+                type="radio"
+                name="booking-time"
+                id="morning-radio"
+                checked
+              />上半天
+            </label>
+            <label class="booking-time-afternoon normal">
+              <input
+                type="radio"
+                name="booking-time"
+                id="afternoon-radio"
+              />下半天
+            </label>
+          </div>
 
-
-        <div class="profile">
-            <form action="" class="booking">
-                <p class="booking-title bold margin-bottom-15">訂購導覽行程</p>
-                <p class="booking-description normal margin-bottom-15">以此景點為中心的一日行程，帶您探索城市角落故事</p>
-                <p class="booking-date bold margin-bottom-15">選擇日期：<input type="date" name="booking-date" id="custom-calendar"></p> 
-                <div class="booking-time bold">選擇時間：
-                    <label class="booking-time-morning normal">
-                        <input type="radio" name="booking-time" id="morning-radio" checked>上半天
-                      </label>
-                      <label class="booking-time-afternoon normal">
-                        <input type="radio" name="booking-time" id="afternoon-radio">下半天
-                      </label>
-                </div>
-
-                <p class="booking-price bold margin-bottom-15">導覽費用：<span class="price normal"></span></p>
-                <button class="booking-submit">開始預約行程</button>
-            </form>
-        </div>
+          <p class="booking-price bold margin-bottom-15">
+            導覽費用：<span class="price normal"></span>
+          </p>
+          <button class="booking-submit">開始預約行程</button>
+          <div class="booking-error-hint"></div>
+        </form>
+      </div>
     </section>
 
     <div class="infos"></div>
     <footer>
-        <p class="footer">
-            COPYRIGHT © 2023 台北一日遊
-        </p>
+      <p class="footer">COPYRIGHT © 2023 台北一日遊</p>
     </footer>
     <script src="/static/js/attraction.js"></script>
     <script src="/static/js/member.js"></script>
-    
-</body>
+  </body>
 </html>

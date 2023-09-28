@@ -38,7 +38,7 @@ window.addEventListener("load", (e) => {
   })
     .then((response) => response.json())
     .then((result) => {
-      if (result != null) {
+      if (result.data != null) {
         loginUsername.innerHTML = result.data.name;
         contactFormName.value = result.data.name;
         contactFormEmail.value = result.data.email;
@@ -71,6 +71,8 @@ window.addEventListener("load", (e) => {
               footer.style.height = "80vh";
             }
           });
+      } else {
+        window.location.href = "/";
       }
     });
 });

@@ -6,6 +6,27 @@
   box-sizing: border-box;
   font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
 }
+nav區塊 nav {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+/* 會員登入 */
+.dialog {
+  z-index: 2;
+}
+
+.login-email,
+.login-password,
+.signup-email,
+.signup-password,
+.signup-name {
+  height: 47px;
+  padding-left: 10px;
+}
+
+.dialog-signup {
+  z-index: 2;
+}
 
 .booking-wrapper,
 .headline,

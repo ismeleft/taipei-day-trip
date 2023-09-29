@@ -1,52 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taipei Day Trip</title>
-    <link rel="stylesheet" href="/static/css/base.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/static/css/base.css" />
+  </head>
+  <body>
     <nav>
-        <div class="nav-bar">
-            <div class="nav-sitename"><a class="sitename" href="/">台北一日遊</a></div>  
-            <div class="nav-buttons">
-                <div class="nav-button-booking">預定行程</div>
-                <div class="nav-button-login">登入/註冊</div>
-                <div class="nav-button-logout">登出系統</div>
-            </div>
+      <div class="nav-bar">
+        <div class="nav-sitename">
+          <a class="sitename" href="/">台北一日遊</a>
         </div>
+        <div class="nav-buttons">
+          <div class="nav-button-booking">預定行程</div>
+          <div class="nav-button-login">登入/註冊</div>
+          <div class="nav-button-logout">登出系統</div>
+        </div>
+      </div>
     </nav>
 
     <!--登入畫面-->
     <div class="dialog">
-        <div class="login">
-            <div class="login-top"></div>
-            <p class="login-title">登入會員帳號</p>
-            <input type="email" class="login-email" placeholder="輸入電子信箱">
-            <input type="password" name="" class="login-password" placeholder="輸入密碼">
-            <button class="login-button">登入帳戶</button>
-            <div class="login-error-hint"></div>
-            <p class="login-hint">還沒有帳戶？<a href="" class="login-to-signup">點此註冊</a></p>
-            <img src="/static/img/desktop-index-dialog-icon-icon-close.png" alt="" srcset="" class="close-window-login">
-        </div>
+      <div class="login">
+        <div class="login-top"></div>
+        <p class="login-title">登入會員帳號</p>
+        <input type="email" class="login-email" placeholder="輸入電子信箱" />
+        <input
+          type="password"
+          name=""
+          class="login-password"
+          placeholder="輸入密碼"
+        />
+        <button class="login-button">登入帳戶</button>
+        <div class="login-error-hint"></div>
+        <p class="login-hint">
+          還沒有帳戶？<a href="" class="login-to-signup">點此註冊</a>
+        </p>
+        <img
+          src="/static/img/desktop-index-dialog-icon-icon-close.png"
+          alt=""
+          srcset=""
+          class="close-window-login"
+        />
+      </div>
     </div>
     <!--註冊畫面-->
     <div class="dialog-signup">
-        <div class="signup">
-            <div class="signup-top"></div>
-            <p class="signup-title">註冊會員帳號</p>
-            <input type="text" class="signup-name" placeholder="輸入姓名" required>
-            <input type="email" class="signup-email" placeholder="輸入電子信箱" required>
-            <input type="password" name="" class="signup-password" placeholder="輸入密碼" required>
-            <button class="signup-button">註冊新帳戶</button>
-            <div class="signup-error-hint"></div>
-            <p class="signup-hint">已經有帳戶了？<a href="#" class="signup-to-login">點此登入</a></p>
-            <img src="/static/img/desktop-index-dialog-icon-icon-close.png" alt="" srcset="" class="close-window-signup">
-        </div>
+      <div class="signup">
+        <div class="signup-top"></div>
+        <p class="signup-title">註冊會員帳號</p>
+        <input
+          type="text"
+          class="signup-name"
+          placeholder="輸入姓名"
+          required
+        />
+        <input
+          type="email"
+          class="signup-email"
+          placeholder="輸入電子信箱"
+          required
+        />
+        <input
+          type="password"
+          name=""
+          class="signup-password"
+          placeholder="輸入密碼"
+          required
+        />
+        <button class="signup-button">註冊新帳戶</button>
+        <div class="signup-error-hint"></div>
+        <p class="signup-hint">
+          已經有帳戶了？<a href="#" class="signup-to-login">點此登入</a>
+        </p>
+        <img
+          src="/static/img/desktop-index-dialog-icon-icon-close.png"
+          alt=""
+          srcset=""
+          class="close-window-signup"
+        />
+      </div>
     </div>
-
-
-    
-</body>
+  </body>
 </html>

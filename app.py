@@ -228,9 +228,8 @@ def signup():
         if cursor is not None:
             cursor.close()
 
+
 # 取得當前登入的資訊
-
-
 @app.route("/api/user/auth", methods=["GET"])
 def get_login_status():
     token = request.headers.get("Authorization")
@@ -298,6 +297,156 @@ def login():
             "error": True,
             "message": "伺服器內部錯誤"
         }), 500
+
+
+# booking API
+# 建立新的預定行程
+@app.route("/api/booking", methods=["POST"])
+def create_booking():
+    try:
+        # 確認使用者登入狀態
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
+
+        token = request.headers.get("Authorization")
+        if token:
+            token = token.split("Bearer ")[-1]
+            user = jwt.decode(token, key, algorithms="HS256")
+            users_id = user["id"]
+            # 確定登入後可以開始預定行程
+            tripId = request.json.get("id")
+            bookingDate = request.json.get("date")
+            bookingTime = request.json.get("time")
+            bookingPrice = request.json.get("price")
+
+            if tripId == "" or bookingDate == "" or bookingTime == "" or bookingPrice == "":
+                return jsonify({
+                    "error": True,
+                    "message": "請填妥所有預定資訊"
+                })
+            # 先確認資料庫是否有預定的資料，如果沒有就新建新的預定，如果有資料就說已被預訂
+            query = "SELECT * FROM booking WHERE users_id = %s"
+            cursor.execute(query, (users_id,))
+            booking_result = cursor.fetchone()
+            if (booking_result == None):
+                query = "INSERT INTO booking (trip_id, date, time, price, users_id) VALUES (%s, %s, %s, %s, %s);"
+                cursor.execute(
+                    query, (tripId, bookingDate, bookingTime, bookingPrice, users_id))
+                conn.commit()
+            else:
+                query = "UPDATE booking SET trip_id=%s, date=%s ,time =%s, price=%s WHERE users_id=%s"
+                print("SQL Query:", query)
+                print("Parameters:", (tripId, bookingDate, bookingTime, bookingPrice, users_id))
+                cursor.execute(
+                    query, (tripId, bookingDate, bookingTime, bookingPrice, users_id))
+                conn.commit()
+
+            return jsonify({
+                "ok": True
+            }), 200
+
+        else:
+            return jsonify({
+                "error": True,
+                "message": "請登入系統後再操作"
+            }), 403
+    except mysql.connector.Error as err:
+        print("MySQL error:",err)
+        return jsonify({
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+
+# 取得尚未下單的預定行程
+@app.route("/api/booking", methods=["GET"])
+def order_not_confirmed():
+    try:
+        # 確認使用者登入狀態
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
+        token = request.headers.get("Authorization")
+        if token:
+            token = token.split("Bearer ")[-1]
+            user = jwt.decode(token, key, algorithms="HS256")
+            # print(user)
+            users_id = user["id"]
+            #如果有登入去trip&booking撈資料
+            query = "SELECT booking.id, trip_id, name, address, images, date, time, price FROM booking INNER JOIN trip ON trip.id = booking.trip_id WHERE users_id = %s"
+            cursor.execute(query, (users_id,))
+            has_booking = cursor.fetchone()
+            print(has_booking)
+            if (has_booking):
+                return jsonify({
+                    "data": {
+                        "attraction": {
+                            "id": has_booking[1],
+                            "name": has_booking[2],
+                            "address": has_booking[3],
+                            "image": has_booking[4].split(',')[0]
+                        },
+                        "date": str(has_booking[5]),
+                        "time": has_booking[6],
+                        "price": has_booking[7]
+                    }
+                }), 200
+            else:
+                return jsonify({
+                    "data": None,
+                    "message": "沒有預定行程的資料"
+                })
+        else:
+            return jsonify({
+                "error": True,
+                "message": "請登入系統後再操作"
+            }), 403
+    except mysql.connector.Error as err:
+        return jsonify({
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+
+# 刪除預定資料
+@app.route("/api/booking", methods=["DELETE"])
+def delete_booking():
+    try:
+        # 確認使用者登入狀態
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
+        token = request.headers.get("Authorization")
+        if token:
+            token = token.split("Bearer ")[-1]
+            user = jwt.decode(token, key, algorithms="HS256")
+            print(user)
+            users_id = user["id"]
+            # 有登入系統，可以進行刪除預訂資料
+            query = "DELETE FROM booking WHERE users_id=%s"
+            cursor.execute(query, (users_id,))
+            conn.commit()
+            return jsonify({
+                "ok":True
+            }),200
+        else:
+            return jsonify({
+                "error": True,
+                "message": "請登入系統後再操作"
+            }), 403
+
+    except mysql.connector.Error as err:
+        return jsonify({
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }), 500
+    finally:
+        cursor.close()
+        conn.close()
 
 
 app.run(host="0.0.0.0", port=3000)

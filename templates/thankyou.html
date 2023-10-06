@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taipei Day Trip</title>
+    <link rel="stylesheet" href="/static/css/thankyou.css" />
+  </head>
+  <body>
+    {% include 'base.html' %}
+    <div class="finished_payment">
+      <img
+        class="finished_icon"
+        src="/static/img/checked.png"
+        alt=""
+        srcset=""
+      />
+    </div>
+
+    <div class="thankyou_title">
+      行程預定成功<br />
+      您的訂單編號如下
+    </div>
+    <div class="orderNumber"></div>
+    <div class="orderHint">請記住此編號，或到會員中心查詢歷史訂單</div>
+    <footer>
+      <p class="footer">COPYRIGHT © 2023 台北一日遊</p>
+    </footer>
+    <script src="/static/js/thankyou.js"></script>
+  </body>
+</html>

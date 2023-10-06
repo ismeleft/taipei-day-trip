@@ -120,7 +120,6 @@ window.addEventListener("load", () => {
         return response.json();
       })
       .then(function (result) {
-        console.log(result);
         if (result.data == null) {
           loginBtn.style.display = "block";
           logoutBtn.style.display = "none";

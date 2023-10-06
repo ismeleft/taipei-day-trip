@@ -47,7 +47,7 @@
     </div>
     <!--註冊畫面-->
     <div class="dialog-signup">
-      <div class="signup">
+      <form class="signup">
         <div class="signup-top"></div>
         <p class="signup-title">註冊會員帳號</p>
         <input
@@ -69,7 +69,7 @@
           placeholder="輸入密碼"
           required
         />
-        <button class="signup-button">註冊新帳戶</button>
+        <button type="submit" class="signup-button">註冊新帳戶</button>
         <div class="signup-error-hint"></div>
         <p class="signup-hint">
           已經有帳戶了？<a href="#" class="signup-to-login">點此登入</a>
@@ -80,7 +80,8 @@
           srcset=""
           class="close-window-signup"
         />
-      </div>
+      </form>
     </div>
+    <script src="/static/js/member.js"></script>
   </body>
 </html>

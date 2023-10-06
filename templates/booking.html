@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taipei Day Trip</title>
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
     <link rel="stylesheet" href="/static/css/booking.css" />
   </head>
   <body>
@@ -29,42 +30,53 @@
       </section>
       <div class="contact-form">
         <div class="contact-form-title">您的聯絡資訊</div>
-        聯絡姓名：<input type="text" class="contact-form-name" required /><br />
+        聯絡姓名：<input
+          type="text"
+          class="contact-form-name"
+          required="required"
+        />
+        <span class="error-contactName-message"></span>
+        <br />
         聯絡信箱：<input
           type="email"
           class="contact-form-email"
-          required
-        /><br />
-        手機號碼：<input type="tel" class="contact-form-phone" required />
+          required="required"
+        />
+        <span class="error-contactEmail-message"></span>
+
+        <br />
+        手機號碼：<input
+          type="tel"
+          class="contact-form-phone"
+          id="phone-number-input"
+          maxlength="10"
+          required="required"
+        />
+
+        <span class="error-contactPhone-message"></span>
+
         <p class="contact-form-hint">
           請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
         </p>
       </div>
       <div class="payment">
         <div class="payment-title">信用卡付款資訊</div>
-        卡片號碼：<input
-          type="tel"
-          class="payment-number"
-          pattern="\d*"
-          maxlength="19"
-          placeholder="**** **** **** ****"
-          required
-        /><br />
-        過期時間：<input
-          type="tel"
-          class="payment-exp"
-          placeholder="MM / YY"
-          pattern="\d*"
-          maxlength="7"
-          required
-        /><br />
-        驗證密碼：<input
-          type="password"
-          class="payment-password"
-          pattern="\d*"
-          maxlength="4"
-          placeholder="CVC"
-        />
+        <div class="payment-info">
+          卡片號碼：
+          <div class="tpfield tappay-field-focus" id="card-number"></div>
+        </div>
+        <div class="payment-info">
+          過期時間：
+          <div
+            class="tpfield tappay-field-focus"
+            id="card-expiration-date"
+          ></div>
+        </div>
+        <div class="payment-info">
+          驗證密碼：
+          <div class="tpfield tappay-field-focus" id="card-ccv"></div>
+        </div>
+        <div class="payment-error-message"></div>
       </div>
       <div class="confirm">
         <div class="confirm-payment">總價：</div>
@@ -74,11 +86,19 @@
     <div class="no-booking-message" style="display: none">
       目前沒有任何待預訂的行程
     </div>
+    <div class="transaction-in-progress">
+      <div class="loader"></div>
+      <p class="loader-text">交易進行中，請稍候．．．請勿關閉視窗</p>
+    </div>
+    <div class="payment-failed" style="display: none">
+      <img src="/static/img/warning.png" class="payment-fail-icon" alt="" />
+      <p class="payment-fail-text"></p>
+    </div>
 
     <footer>
       <p class="footer">COPYRIGHT © 2023 台北一日遊</p>
     </footer>
     <script src="/static/js/booking.js"></script>
-    <script src="/static/js/member.js"></script>
+    <!-- <script src="/static/js/member.js"></script> -->
   </body>
 </html>

@@ -245,6 +245,7 @@ p.footer {
   height: 200px;
   background-color: #f3f3f3;
   margin: 0 auto;
+  top: -700px;
 }
 .payment-fail-icon {
   position: absolute;

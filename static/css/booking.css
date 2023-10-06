@@ -240,21 +240,23 @@ p.footer {
 
 /*交易失敗*/
 .payment-failed {
-  width: 400px;
+  position: relative;
+  width: 450px;
   height: 200px;
   background-color: #f3f3f3;
-  display: flex;
-  justify-content: center;
   margin: 0 auto;
-  flex-wrap: wrap;
 }
 .payment-fail-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 40px;
   height: 40px;
   margin-top: 20px;
 }
 .payment-fail-text {
   text-align: center;
+  margin-top: 70px;
 }
 @media screen and (max-width: 1200px) {
   .booking-wrapper,

@@ -278,8 +278,7 @@ confirmBtn.addEventListener("click", (e) => {
             window.location.href = `/thankyou?number=${result.data.number}`;
           } else {
             paymentfailedfield.style.display = "block";
-            paymentfailedText.textContent = `交易失敗：\n您的訂單編號是${result.data.number}，
-            \n請至會員中心確認狀態`;
+            paymentfailedText.innerHTML = `交易失敗：<br>您的訂單編號是${result.data.number}，<br>請至會員中心確認狀態`;
           }
         })
         .catch((error) => {

@@ -1,0 +1,36 @@
+.thankyou_title,
+.orderHint {
+  margin: 30px 0px;
+  text-align: center;
+  color: #757575;
+  line-height: 25px;
+  font-weight: 600;
+}
+.orderNumber {
+  text-align: center;
+  color: #575757;
+  font-weight: 700;
+  font-size: 19px;
+  text-decoration: underline;
+}
+.finished_payment {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+.finished_icon {
+  width: 70px;
+  height: 70px;
+}
+/* footer 區塊 */
+footer {
+  height: 70vh;
+  padding: 40px 0px;
+  text-align: center;
+  background-color: #757575;
+}
+
+p.footer {
+  color: #ffffff;
+  font-weight: 700;
+}

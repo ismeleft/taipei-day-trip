@@ -148,7 +148,7 @@ startBooking.addEventListener("click", (e) => {
         id: urlId,
         date: bookingDate,
         time: selectedTime,
-        price: selectedPrice,
+        price: parseInt(selectedPrice.split(" ")[1].replace("元", "")),
       }),
     })
       .then((response) => response.json())

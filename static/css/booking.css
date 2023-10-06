@@ -81,6 +81,7 @@ section.booking {
   color: #666;
   margin-bottom: 15px;
 }
+
 .trash-button {
   position: absolute;
   width: 30px;
@@ -107,9 +108,7 @@ section.booking {
 .contact-form-name,
 .contact-form-email,
 .contact-form-phone,
-.payment-number,
-.payment-exp,
-.payment-password {
+.tpfield {
   border-radius: 5px;
   border: 1px solid #e8e8e8;
   padding: 10px;
@@ -123,6 +122,13 @@ section.booking {
   padding-bottom: 45px;
   border-bottom: #e8e8e8 1px solid;
 }
+.error-contactName-message,
+.error-contactEmail-message,
+.error-contactPhone-message {
+  font-size: 12px;
+  padding: 5px;
+  color: red;
+}
 .payment-title {
   color: #666;
   margin-top: 40px;
@@ -131,6 +137,31 @@ section.booking {
   font-weight: 700;
   line-height: 16px;
   margin-bottom: 30px;
+}
+/*付款相關*/
+.tpfield {
+  height: 41.5px;
+  width: 164px;
+  transform: translateY(20%);
+}
+.payment-info {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+/* Bootstrap 的 focus style */
+.tappay-field-focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+}
+.payment-error-message {
+  font-size: 12px;
+  color: red;
+  padding-top: 10px;
 }
 .confirm {
   display: flex;
@@ -174,6 +205,60 @@ p.footer {
   font-weight: 700;
 }
 
+/*payment loading*/
+.transaction-in-progress {
+  display: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*交易失敗*/
+.payment-failed {
+  position: relative;
+  width: 450px;
+  height: 200px;
+  background-color: #f3f3f3;
+  margin: 0 auto;
+  top: -700px;
+}
+.payment-fail-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  margin-top: 20px;
+}
+.payment-fail-text {
+  text-align: center;
+  padding-top: 70px;
+}
 @media screen and (max-width: 1200px) {
   .booking-wrapper,
   .headline,

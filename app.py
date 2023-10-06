@@ -4,7 +4,11 @@ from mysql.connector import pooling
 from flask_bcrypt import Bcrypt
 import jwt
 from datetime import datetime, timedelta
-
+import uuid
+import requests
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 app = Flask(__name__,
             static_folder='static',
@@ -33,6 +37,9 @@ connection_pool = mysql.connector.pooling.MySQLConnectionPool(
 bcrypt = Bcrypt()
 
 key = "secret"
+partner_key=os.getenv("partner_key")
+
+
 
 # Pages
 
@@ -186,7 +193,6 @@ def signup():
         username = request.json.get("name")
         email = request.json.get("email")
         password = request.json.get("password")
-        print(username, email, password)
 
         conn = connection_pool.get_connection()
         cursor = conn.cursor()
@@ -304,7 +310,6 @@ def login():
 @app.route("/api/booking", methods=["POST"])
 def create_booking():
     try:
-        # 確認使用者登入狀態
         conn = connection_pool.get_connection()
         cursor = conn.cursor()
 
@@ -313,7 +318,6 @@ def create_booking():
             token = token.split("Bearer ")[-1]
             user = jwt.decode(token, key, algorithms="HS256")
             users_id = user["id"]
-            # 確定登入後可以開始預定行程
             tripId = request.json.get("id")
             bookingDate = request.json.get("date")
             bookingTime = request.json.get("time")
@@ -324,7 +328,6 @@ def create_booking():
                     "error": True,
                     "message": "請填妥所有預定資訊"
                 })
-            # 先確認資料庫是否有預定的資料，如果沒有就新建新的預定，如果有資料就說已被預訂
             query = "SELECT * FROM booking WHERE users_id = %s"
             cursor.execute(query, (users_id,))
             booking_result = cursor.fetchone()
@@ -335,8 +338,6 @@ def create_booking():
                 conn.commit()
             else:
                 query = "UPDATE booking SET trip_id=%s, date=%s ,time =%s, price=%s WHERE users_id=%s"
-                print("SQL Query:", query)
-                print("Parameters:", (tripId, bookingDate, bookingTime, bookingPrice, users_id))
                 cursor.execute(
                     query, (tripId, bookingDate, bookingTime, bookingPrice, users_id))
                 conn.commit()
@@ -372,13 +373,10 @@ def order_not_confirmed():
         if token:
             token = token.split("Bearer ")[-1]
             user = jwt.decode(token, key, algorithms="HS256")
-            # print(user)
             users_id = user["id"]
-            #如果有登入去trip&booking撈資料
             query = "SELECT booking.id, trip_id, name, address, images, date, time, price FROM booking INNER JOIN trip ON trip.id = booking.trip_id WHERE users_id = %s"
             cursor.execute(query, (users_id,))
             has_booking = cursor.fetchone()
-            print(has_booking)
             if (has_booking):
                 return jsonify({
                     "data": {
@@ -417,7 +415,6 @@ def order_not_confirmed():
 @app.route("/api/booking", methods=["DELETE"])
 def delete_booking():
     try:
-        # 確認使用者登入狀態
         conn = connection_pool.get_connection()
         cursor = conn.cursor()
         token = request.headers.get("Authorization")
@@ -426,7 +423,6 @@ def delete_booking():
             user = jwt.decode(token, key, algorithms="HS256")
             print(user)
             users_id = user["id"]
-            # 有登入系統，可以進行刪除預訂資料
             query = "DELETE FROM booking WHERE users_id=%s"
             cursor.execute(query, (users_id,))
             conn.commit()
@@ -449,4 +445,116 @@ def delete_booking():
         conn.close()
 
 
+
+
+# 建立訂單並付款
+@app.route("/api/orders", methods=["POST"])
+def place_an_order():
+    try:
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
+        token = request.headers.get("Authorization")
+        if token:
+            token = token.split("Bearer ")[-1]
+            user = jwt.decode(token, key, algorithms="HS256")
+            users_id = user["id"]
+            data = request.get_json()
+            prime = data["prime"]
+            price = data["order"]["price"]
+            attraction_id = data["order"]["trip"]["attraction"]["id"]
+            order_date = data["order"]["trip"]["date"]
+            order_time = data["order"]["trip"]["time"]
+            contact_name = data["order"]["contact"]["name"]
+            contact_mail = data["order"]["contact"]["email"]
+            contact_phone = data["order"]["contact"]["phone"]
+
+            now = datetime.now()
+            order_number = now.strftime("%Y%m%d%H%M%S") + str(uuid.uuid4())
+
+
+            if contact_name == "" or contact_mail == "" or contact_phone == "":
+                return jsonify({
+                    "error": True,
+                    "message": "請先將資料填妥再進行交易"
+                })
+            
+            query = "DELETE FROM booking WHERE users_id =%s "
+            cursor.execute(query, (users_id,))
+            conn.commit()
+
+            query = "INSERT INTO orders (users_id, trip_id, date, time, price, contact_name, contact_mail, contact_phone, order_number, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, '未付款')"
+            cursor.execute(query, (users_id, attraction_id, order_date, order_time, price, contact_name, contact_mail, contact_phone, order_number))
+            conn.commit()
+
+            tappay_url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+
+            tappay_data = {
+                "prime": prime,  
+                "partner_key": partner_key,  
+                "merchant_id": "leftleft10_NCCC", 
+                "details": "Taipei Trip Test",
+                "amount": price,  
+                "cardholder": {
+                    "phone_number": contact_phone,
+                    "name": contact_name,
+                    "email": contact_mail
+
+                },
+                "remember": True
+            }
+            print(tappay_data)
+
+            headers = {
+                "Content-Type": "application/json",
+                "x-api-key":partner_key
+            }
+
+            response = requests.post(tappay_url, json=tappay_data, headers=headers,timeout=30)
+            result = response.json()
+
+            # print("Status Code:", response.status_code)
+            # print("Response JSON:",result)
+            print(result["status"])
+
+            if result["status"] == 0:
+                query = "UPDATE orders SET status=%s WHERE order_number=%s"
+                cursor.execute(query, ("已付款", order_number))
+                conn.commit()
+
+                return jsonify({
+                    "data": {
+                        "number": order_number,
+                        "payment": {
+                            "status": 0,
+                            "message": "付款成功"
+                        }
+                    }
+                }), 200
+
+            else:
+                return jsonify({
+                    "data":{
+                        "number":order_number,
+                        "payment":{
+                            "status":result["status"],
+                            "message":"付款失敗"
+                        }
+                    }
+                }),400      
+
+
+        else:
+            return jsonify({
+                "error": True,
+                "message": "請先登入系統再操作"
+            }), 403
+
+    except mysql.connector.Error as err:
+        return jsonify({
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }), 500
+    finally:
+        conn.close()
+        cursor.close()
 app.run(host="0.0.0.0", port=3000)

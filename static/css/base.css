@@ -1,205 +1,214 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
 }
-body{
-    position: relative;
+body {
+  position: relative;
 }
 /* nav區塊 */
 
-nav{
-    height: 54px;
-    padding: 10px 0px;
-    align-items: center;
-    background-color: #fff;
-    border-bottom:1px solid #E8E8E8 ;
-    
+nav {
+  height: 54px;
+  padding: 10px 0px;
+  align-items: center;
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.nav-bar{
-    max-width: 1200px;
-    display: flex;
-    margin: 0 auto;
+.nav-bar {
+  max-width: 1200px;
+  display: flex;
+  margin: 0 auto;
 }
 
-.nav-buttons{
-    position: relative;
-    display: flex;
-    flex: auto;
-    justify-content: flex-end;
-    cursor: pointer;
+.nav-buttons {
+  position: relative;
+  display: flex;
+  flex: auto;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
 }
 
-.nav-button-booking,.nav-button-login,.nav-button-logout{
-    display: flex;
-    align-items: center;
-    padding: 0px 10px;
-    color: #666666;
-    font-weight: 400;
-
+.nav-button-booking,
+.nav-button-login,
+/* .nav-button-logout, */
+.nav-button-membercenter {
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+  color: #666666;
+  font-weight: 400;
 }
-.nav-button-login,.nav-button-logout{
-    display: flex;
-    align-self: center;
-    display: none;
+.nav-button-login,
+.nav-button-logout,
+.nav-button-membercenter {
+  display: flex;
+  align-self: center;
+  display: none;
 }
 
-
-
+.nav-button-login:hover,
+.nav-button-logout:hover,
+.nav-button-membercenter:hover,
+.nav-button-booking:hover {
+  color: #448899;
+}
 .nav-sitename {
-
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 34px; 
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 34px;
 }
 
-.sitename{
-    text-decoration: none;
-    color: #448899;
+.sitename {
+  text-decoration: none;
+  color: #448899;
 }
 
-button{
-    background-color: #fff;
-    border: none;
-    cursor: pointer;
+button {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
 }
 /* 會員登入 */
-.dialog{
-    display: none;
-    background-color: #FFF;
-    border-radius: 6px;
-    width: 340px;
-    position: absolute;
+.dialog {
+  display: none;
+  background-color: #fff;
+  border-radius: 6px;
+  width: 340px;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 4px 60px 0px #aaa;
+  animation-name: down;
+  animation-duration: 0.5s;
+}
+@keyframes down {
+  from {
+    top: -100px;
+  }
+  to {
     top: 80px;
-    left: 50%;
-    transform: translateX(-50%); 
-    box-shadow: 0px 4px 60px 0px #AAA;
-    animation-name: down;
-    animation-duration: 0.5s;
-
-    
+  }
 }
-@keyframes down{
-    from{
-        top:-100px;
-    }
-    to{
-        top: 80px;
-
-    }
-}
-.login{
-    position: relative;
+.login {
+  position: relative;
 }
 
-.login-top,.signup-top{
-    border-radius: 6px 6px 0px 0px;
-    width: 340px;
-    height: 10px;
-    background: linear-gradient(270deg, #378 0%, #6AB 100%);
+.login-top,
+.signup-top {
+  border-radius: 6px 6px 0px 0px;
+  width: 340px;
+  height: 10px;
+  background: linear-gradient(270deg, #378 0%, #6ab 100%);
 }
-.login-title,.signup-title{
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 24px;
-    text-align: center;
-    color:#666 ;
-    padding-top: 25px;
+.login-title,
+.signup-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  color: #666;
+  padding-top: 25px;
 }
-.login-email,.login-password,.signup-email,.signup-password,.signup-name{
-    margin-bottom: 10px;
-    margin-left: 15px;
-    border-radius: 5px;
-    border: 1px solid  #CCC;
-    background:  #FFF;
-    width: 310px;
-    color:#757575 ;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
+.login-email,
+.login-password,
+.signup-email,
+.signup-password,
+.signup-name {
+  margin-bottom: 10px;
+  margin-left: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  width: 310px;
+  color: #757575;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+}
+.login-email,
+.signup-name {
+  margin-top: 15px;
+}
+.login-button,
+.signup-button {
+  margin-left: 15px;
+  width: 310px;
+  height: 47px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #489;
+  color: #fff;
 
-}
-.login-email,.signup-name{
-    margin-top: 15px;
-}
-.login-button,.signup-button{
-    margin-left: 15px;
-    width: 310px;
-    height: 47px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    background: #489;
-    color: #FFF;
-
-    font-size: 19px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px; 
-    margin-bottom: 10px;
-}
-
-.login-hint,.signup-hint{
-    text-align: center;
-    height: 22px;
-    color: #666;
-
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 13.3px; 
-    margin-bottom: 15px;
-}
-.login-to-signup,.signup-to-login{
-    text-decoration: none;
-    color:#666;    
-}
-.close-window-login,.close-window-signup{
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 27px;
-    right:17px;
-    cursor: pointer;    
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 10px;
 }
 
-.dialog-signup{
-    display: none;
-    background-color: #FFF;
-    border-radius: 6px;
-    width: 340px;
-    /* height: 332px; */
-    position: absolute;
-    /* top: 80px; */
-    left: 50%;
-    transform: translateX(-50%); 
-    box-shadow: 0px 4px 60px 0px #AAA;  
-    
+.login-hint,
+.signup-hint {
+  text-align: center;
+  height: 22px;
+  color: #666;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 13.3px;
+  margin-bottom: 15px;
 }
-.signup{
-    position: relative;
+.login-to-signup,
+.signup-to-login {
+  text-decoration: none;
+  color: #666;
 }
-.signup-error-hint,.login-error-hint{
-    color: red;
-    text-align: center;
-    margin-bottom: 10px;
+.close-window-login,
+.close-window-signup {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 27px;
+  right: 17px;
+  cursor: pointer;
 }
 
-
-
-
-@media screen and (max-width:1200px){
-    .nav-bar{
-        width: 90%;
-    }
+.dialog-signup {
+  display: none;
+  background-color: #fff;
+  border-radius: 6px;
+  width: 340px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 4px 60px 0px #aaa;
 }
-@media screen and (max-width:600px) {
-    .nav-bar{
-        width: 100%;
-    }
-    .nav-sitename{
-        padding: 0px 0px 0px 15px ;
-    }
+.signup {
+  position: relative;
+}
+.signup-error-hint,
+.login-error-hint {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+  .nav-bar {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .nav-bar {
+    width: 100%;
+  }
+  .nav-sitename {
+    padding: 0px 0px 0px 15px;
+  }
 }

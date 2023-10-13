@@ -109,6 +109,7 @@ section.booking {
 .contact-form-email,
 .contact-form-phone,
 .tpfield {
+  font-size: 16px;
   border-radius: 5px;
   border: 1px solid #e8e8e8;
   padding: 10px;

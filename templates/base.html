@@ -16,23 +16,31 @@
           <div class="nav-button-booking">預定行程</div>
           <div class="nav-button-login">登入/註冊</div>
           <div class="nav-button-logout">登出系統</div>
+          <div class="nav-button-membercenter">會員中心</div>
         </div>
       </div>
     </nav>
 
     <!--登入畫面-->
     <div class="dialog">
-      <div class="login">
+      <form class="login">
         <div class="login-top"></div>
         <p class="login-title">登入會員帳號</p>
-        <input type="email" class="login-email" placeholder="輸入電子信箱" />
+        <input
+          type="email"
+          class="login-email"
+          placeholder="輸入電子信箱"
+          title="請輸入正確的信箱格式，必須包含@"
+          required
+        />
         <input
           type="password"
           name=""
           class="login-password"
           placeholder="輸入密碼"
+          required
         />
-        <button class="login-button">登入帳戶</button>
+        <button type="submit" class="login-button">登入帳戶</button>
         <div class="login-error-hint"></div>
         <p class="login-hint">
           還沒有帳戶？<a href="" class="login-to-signup">點此註冊</a>
@@ -43,7 +51,7 @@
           srcset=""
           class="close-window-login"
         />
-      </div>
+      </form>
     </div>
     <!--註冊畫面-->
     <div class="dialog-signup">
@@ -60,6 +68,7 @@
           type="email"
           class="signup-email"
           placeholder="輸入電子信箱"
+          title="請輸入正確的信箱格式，必須包含@"
           required
         />
         <input
@@ -82,6 +91,6 @@
         />
       </form>
     </div>
-    <script src="/static/js/member.js"></script>
+    <script src="/static/js/base.js"></script>
   </body>
 </html>

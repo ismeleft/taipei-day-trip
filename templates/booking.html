@@ -28,61 +28,68 @@
           />
         </div>
       </section>
-      <div class="contact-form">
-        <div class="contact-form-title">您的聯絡資訊</div>
-        聯絡姓名：<input
-          type="text"
-          class="contact-form-name"
-          required="required"
-        />
-        <span class="error-contactName-message"></span>
-        <br />
-        聯絡信箱：<input
-          type="email"
-          class="contact-form-email"
-          required="required"
-        />
-        <span class="error-contactEmail-message"></span>
-
-        <br />
-        手機號碼：<input
-          type="tel"
-          class="contact-form-phone"
-          id="phone-number-input"
-          maxlength="10"
-          required="required"
-        />
-
-        <span class="error-contactPhone-message"></span>
-
-        <p class="contact-form-hint">
-          請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
-        </p>
-      </div>
-      <div class="payment">
-        <div class="payment-title">信用卡付款資訊</div>
-        <div class="payment-info">
-          卡片號碼：
-          <div class="tpfield tappay-field-focus" id="card-number"></div>
+      <form action="" class="booking-form">
+        <div class="contact-form">
+          <div class="contact-form-title">您的聯絡資訊</div>
+          聯絡姓名：<input
+            type="text"
+            class="contact-form-name"
+            required="required"
+          />
+          <span class="error-contactName-message"></span>
+          <br />
+          聯絡信箱：<input
+            type="email"
+            class="contact-form-email"
+            title="請輸入正確的信箱格式，必須包含@"
+            required="required"
+          />
+          <span class="error-contactEmail-message"></span>
+  
+          <br />
+          手機號碼：<input
+            type="tel"
+            class="contact-form-phone"
+            id="phone-number-input"
+            maxlength="10"
+            pattern="^09\d{8}$"
+            title="請輸入09開頭，共10碼的手機號碼"
+            required="required"
+          />
+  
+          <span class="error-contactPhone-message"></span>
+  
+          <p class="contact-form-hint">
+            請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
+          </p>
         </div>
-        <div class="payment-info">
-          過期時間：
-          <div
-            class="tpfield tappay-field-focus"
-            id="card-expiration-date"
-          ></div>
+        <div class="payment">
+          <div class="payment-title">信用卡付款資訊</div>
+          <div class="payment-info">
+            卡片號碼：
+            <div class="tpfield tappay-field-focus" id="card-number"></div>
+          </div>
+          <div class="payment-info">
+            過期時間：
+            <div
+              class="tpfield tappay-field-focus"
+              id="card-expiration-date"
+            ></div>
+          </div>
+          <div class="payment-info">
+            驗證密碼：
+            <div class="tpfield tappay-field-focus" id="card-ccv"></div>
+          </div>
+          <div class="payment-error-message"></div>
         </div>
-        <div class="payment-info">
-          驗證密碼：
-          <div class="tpfield tappay-field-focus" id="card-ccv"></div>
+        <div class="confirm">
+          <div class="confirm-payment">總價：</div>
+          <button type="submit" class="confirm-btn">確認訂購並付款</button>
         </div>
-        <div class="payment-error-message"></div>
       </div>
-      <div class="confirm">
-        <div class="confirm-payment">總價：</div>
-        <button class="confirm-btn">確認訂購並付款</button>
-      </div>
-    </div>
+  
+
+      </form>
     <div class="no-booking-message" style="display: none">
       目前沒有任何待預訂的行程
     </div>

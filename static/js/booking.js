@@ -24,23 +24,9 @@ let confirmPayment = document.querySelector(".confirm-payment");
 let footer = document.querySelector("footer");
 let attractionId;
 
-//contact phone regex
-const phoneNumberInput = document.getElementById("phone-number-input");
+let storedToken = localStorage.getItem("token");
 
-phoneNumberInput.addEventListener("input", function () {
-  const inputValue = phoneNumberInput.value;
-  const pattern = /^09\d{8}$/; // 以"09"開頭，後面接8位數字
-
-  if (!pattern.test(inputValue)) {
-    phoneNumberInput.setCustomValidity('手機號碼必須以"09"開頭，後接8位數字');
-  } else {
-    phoneNumberInput.setCustomValidity("");
-  }
-});
-
-window.addEventListener("load", (e) => {
-  e.preventDefault();
-  let storedToken = localStorage.getItem("token");
+function loadUserInfo() {
   fetch("/api/user/auth", {
     method: "GET",
     headers: {
@@ -54,46 +40,56 @@ window.addEventListener("load", (e) => {
         contactFormName.value = result.data.name;
         contactFormEmail.value = result.data.email;
 
-        fetch("/api/booking", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${storedToken}`,
-          },
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then((result) => {
-            if (result.data != null) {
-              bookingWrapper.style.display = "block";
-              noBookingMessage.style.display = "none";
-              bookImage.src = result.data.attraction.image;
-              bookingInfoTitle.innerText =
-                "台北一日遊：" + result.data.attraction.name;
-              bookingInfoTime.innerText = "時間：" + result.data.time;
-              bookingInfoDate.innerText = "日期：" + result.data.date;
-              bookingInfoAddress.innerText =
-                "地點：" + result.data.attraction.address;
-              confirmPayment.innerText =
-                "總價：新台幣 " + result.data.price + "元";
-
-              attractionId = result.data.attraction.id;
-              bookingInfoTitle = result.data.attraction.name;
-              bookingInfoAddress = result.data.attraction.address;
-              confirmPayment = parseInt(result.data.price);
-              console.log(typeof confirmPayment);
-              bookingInfoTime = result.data.time;
-              bookingInfoDate = result.data.date;
-            } else {
-              bookingWrapper.style.display = "none";
-              noBookingMessage.style.display = "block";
-              footer.style.height = "80vh";
-            }
-          });
+        loadBookingInfo();
       } else {
         window.location.href = "/";
       }
+    })
+    .catch((error) => {
+      console.error("Error loading user info:", error);
     });
+}
+
+function loadBookingInfo() {
+  fetch("/api/booking", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${storedToken}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.data != null) {
+        bookingWrapper.style.display = "block";
+        noBookingMessage.style.display = "none";
+        bookImage.src = result.data.attraction.image;
+        bookingInfoTitle.innerText =
+          "台北一日遊：" + result.data.attraction.name;
+        bookingInfoTime.innerText = "時間：" + result.data.time;
+        bookingInfoDate.innerText = "日期：" + result.data.date;
+        bookingInfoAddress.innerText =
+          "地點：" + result.data.attraction.address;
+        confirmPayment.innerText = "總價：新台幣 " + result.data.price + "元";
+
+        attractionId = result.data.attraction.id;
+        bookingInfoTitle = result.data.attraction.name;
+        bookingInfoAddress = result.data.attraction.address;
+        confirmPayment = parseInt(result.data.price);
+        bookingInfoTime = result.data.time;
+        bookingInfoDate = result.data.date;
+      } else {
+        bookingWrapper.style.display = "none";
+        noBookingMessage.style.display = "block";
+        footer.style.height = "80vh";
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading booking info:", error);
+    });
+}
+
+window.addEventListener("load", () => {
+  loadUserInfo();
 });
 
 //點選刪除按鈕，呼叫刪除預定資料api
@@ -142,7 +138,7 @@ TPDirect.card.setup({
     },
     ccv: {
       element: "#card-ccv",
-      placeholder: "ccv",
+      placeholder: "CCV",
     },
   },
   styles: {
@@ -152,19 +148,19 @@ TPDirect.card.setup({
     },
     // Styling ccv field
     "input.ccv": {
-      // 'font-size': '16px'
+      "font-size": "16px",
     },
     // Styling expiration-date field
     "input.expiration-date": {
-      // 'font-size': '16px'
+      "font-size": "16px",
     },
     // Styling card-number field
     "input.card-number": {
-      // 'font-size': '16px'
+      "font-size": "16px",
     },
     // style focus state
     ":focus": {
-      // 'color': 'black'
+      // color: "black",
     },
     // style valid state
     ".valid": {
@@ -190,7 +186,7 @@ TPDirect.card.setup({
   },
 });
 
-let confirmBtn = document.querySelector(".confirm-btn");
+let bookingForm = document.querySelector(".booking-form");
 let paymentfailedText = document.querySelector(".payment-fail-text");
 let paymentfailedfield = document.querySelector(".payment-failed");
 let transactionInProgress = document.querySelector(".transaction-in-progress");
@@ -198,7 +194,7 @@ function displayErrorMessage(element, message) {
   element.innerText = message;
 }
 
-confirmBtn.addEventListener("click", (e) => {
+bookingForm.addEventListener("submit", (e) => {
   e.preventDefault();
   transactionInProgress.style.display = "flex";
   setTimeout(() => {

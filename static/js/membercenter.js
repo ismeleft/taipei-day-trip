@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
   }
 });
 let orderListContainer = document.querySelector(".orderhistoty");
-
+let noOrderhistory = document.querySelector(".noOrderhistory-hint");
 async function getOrder() {
   const response = await fetch("/api/order", {
     method: "GET",
@@ -23,35 +23,40 @@ async function getOrder() {
     },
   });
   const ordersData = await response.json();
+  console.log(ordersData);
 
-  for (let order of ordersData) {
-    let orderData = order.data;
+  if (ordersData.length !== 0) {
+    for (let order of ordersData) {
+      let orderData = order.data;
 
-    let orderElement = document.createElement("div");
-    orderElement.classList.add("order-item");
+      let orderElement = document.createElement("div");
+      orderElement.classList.add("order-item");
 
-    orderElement.innerHTML = `
-                <img class="order_attraction_img" src=${orderData.trip.attraction.image} />
-                <div class="order-info">
-                  <p>訂單編號：${orderData.number}</p>
-                  <p>訂單景點：${orderData.trip.attraction.name}</p>
-                  <p>預定地址：${orderData.trip.attraction.address}</p>
-                  <p>預定日期：${orderData.trip.date}</p>                
-                  <p>預定時段：${orderData.trip.time}</p>
-                  <br>
-                  <hr>
-                  <br>
-                  <p>訂單聯絡人：${orderData.contact.name}</p>
-                  <p>聯絡人mail：${orderData.contact.email}</p>
-                  <p>聯絡人電話：${orderData.contact.phone}</p>
-                  <br>
-                  <hr>
-                  <br>
-                  <p>訂單總價：${orderData.price}</p>
-                  <p>訂單狀態：${orderData.status}</p> 
-                </div>
-            `;
+      orderElement.innerHTML = `
+                  <img class="order_attraction_img" src=${orderData.trip.attraction.image} />
+                  <div class="order-info">
+                    <p>訂單編號：${orderData.number}</p>
+                    <p>訂單景點：${orderData.trip.attraction.name}</p>
+                    <p>預定地址：${orderData.trip.attraction.address}</p>
+                    <p>預定日期：${orderData.trip.date}</p>                
+                    <p>預定時段：${orderData.trip.time}</p>
+                    <br>
+                    <hr>
+                    <br>
+                    <p>訂單聯絡人：${orderData.contact.name}</p>
+                    <p>聯絡人mail：${orderData.contact.email}</p>
+                    <p>聯絡人電話：${orderData.contact.phone}</p>
+                    <br>
+                    <hr>
+                    <br>
+                    <p>訂單總價：${orderData.price}</p>
+                    <p>訂單狀態：${orderData.status}</p> 
+                  </div>
+              `;
 
-    orderListContainer.appendChild(orderElement);
+      orderListContainer.appendChild(orderElement);
+    }
+  } else {
+    noOrderhistory.style.display = "block";
   }
 }

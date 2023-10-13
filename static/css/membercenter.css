@@ -7,13 +7,16 @@
   font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
 }
 body {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 section {
   display: flex;
   max-width: 1200px;
   margin: 20px auto;
   justify-content: space-between;
+  width: 90%;
 }
 
 .membercenter-title {
@@ -51,6 +54,10 @@ section {
   flex-direction: column;
   margin: 30px auto;
   max-width: 1200px;
+  flex: 1;
+}
+.noOrderhistory-hint {
+  display: none;
 }
 .order-item {
   display: flex;
@@ -71,7 +78,7 @@ hr {
 }
 /* footer 區塊 */
 footer {
-  height: 30vh;
+  height: 104px;
   padding: 40px 0px;
   text-align: center;
   background-color: #757575;

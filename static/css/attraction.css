@@ -1,340 +1,309 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
 }
 
 /* 字形區塊 */
-.normal{
-    color: #666666;
-    font-weight: 500;
+.normal {
+  color: #666666;
+  font-weight: 500;
 }
-.normal-400{
-    color: #666666;
-    font-weight: 400;
-
+.normal-400 {
+  color: #666666;
+  font-weight: 400;
 }
-.bold{
-    color: #666666;
-    font-weight: 600;
+.bold {
+  color: #666666;
+  font-weight: 600;
 }
 
 /* 固定間隔 */
-.margin-bottom-15{
-    margin-bottom: 15px;
+.margin-bottom-15 {
+  margin-bottom: 15px;
 }
-.margin-bottom-30{
-    margin-bottom: 30px;
-}
-
-
-nav區塊
-
-nav{
-
-    border-bottom:1px solid #E8E8E8 ;
-    
+.margin-bottom-30 {
+  margin-bottom: 30px;
 }
 
+nav區塊 nav {
+  border-bottom: 1px solid #e8e8e8;
+}
 
 /* 會員登入 */
-.dialog{
-    z-index: 2;
-   
+.dialog {
+  z-index: 2;
 }
 
-.login-email,.login-password,.signup-email,.signup-password,.signup-name{
-    height: 47px;
-    padding-left: 10px;
-
+.login-email,
+.login-password,
+.signup-email,
+.signup-password,
+.signup-name {
+  height: 47px;
+  padding-left: 10px;
 }
 
-.dialog-signup{
-    z-index: 2;
-
+.dialog-signup {
+  z-index: 2;
 }
 
 /* section區塊 */
-section{
-    max-width: 1200px;
-    margin: 0px auto;
-    display: flex;
-    padding:30px 0px ;
+section {
+  max-width: 1200px;
+  margin: 0px auto;
+  display: flex;
+  padding: 30px 0px;
 }
-.attraction-carousel{
-    width: 540px;
-    position: relative;
-    overflow: hidden;
-
+.attraction-carousel {
+  width: 540px;
+  position: relative;
+  overflow: hidden;
 }
-.attractionImg-container{
-    display: flex;
-    width: 540px;
-    height: 400px;
-    transition: 0.4s all ease;
-
+.attractionImg-container {
+  display: flex;
+  width: 540px;
+  height: 400px;
+  transition: 0.4s all ease;
 }
 .attraction-image {
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    object-fit: cover; 
-    flex-shrink: 0;
-    
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-.left-arrow{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 10px;
-    width: 32px;
-    height: 32px;
+.left-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 }
-.right-arrow{
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 10px;
-    opacity: 0.75;
+.right-arrow {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  opacity: 0.75;
+  cursor: pointer;
 }
 .dot-container {
-    position: absolute;
-    bottom: 10px;
-    width: 100%; 
-    display: flex;
-    justify-content: center; 
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .dot.active {
-    background-color: black;
-    border: white 1px solid;
+  background-color: black;
+  border: white 1px solid;
 }
 
 .dot {
-    margin: 5px;
-    border-radius: 50%;
-    height: 12px;
-    width: 12px;
-    background-color: white;
-    opacity: 0.8;
-    cursor: pointer;
-
+  margin: 5px;
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  background-color: white;
+  opacity: 0.8;
+  cursor: pointer;
 }
 
-.profile{
-    width: 600px;
-    height: 400px;
-    margin-left: 30px;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-around;
+.profile {
+  width: 600px;
+  height: 400px;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
 }
 
-.atrractionName{
-    font-size: 24px;
+.atrractionName {
+  font-size: 24px;
 }
-.attractionInfo{
-    display: flex;
+.attractionInfo {
+  display: flex;
 }
-.at{
-    margin: 0px 5px;
+.at {
+  margin: 0px 5px;
 }
 
-.booking{
-    background-color:#E8E8E8;
-    border-radius: 5px;
-    padding: 15px 20px 41px 20px;
-    
+.booking {
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  padding: 15px 20px 41px 20px;
 }
-/* .booking-date{
-    width: 193px;
-    height: 35px;
-    border: none;
-    padding: 5px;
-    font-weight: 500;
-    font-size: 16px;
 
-} */
 input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
+  opacity: 0;
 }
-input[type="date"]{
-    background-image: url("/static/img/calendar.png");
-    background-repeat: no-repeat;
-    background-size: 24px 24px;
-    background-position-x: 95%;
-    background-position-y:30%;
-    width: 193px;
-    height: 35px;
-    border: none;
-    padding: 5px;
-    font-weight: 500;
-    font-size: 16px;
-    
+input[type="date"] {
+  background-image: url("/static/img/calendar.png");
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  background-position-x: 95%;
+  background-position-y: 30%;
+  width: 193px;
+  height: 35px;
+  border: none;
+  padding: 5px;
+  font-weight: 500;
+  font-size: 16px;
 }
 
-
-input[type="radio"]{
-    outline: none;
-    appearance: none;
-    vertical-align: middle;
-    width: 22px;
-    height: 22px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    cursor: pointer;
-  }
+input[type="radio"] {
+  outline: none;
+  appearance: none;
+  vertical-align: middle;
+  width: 22px;
+  height: 22px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  cursor: pointer;
+}
 
 input[type="radio"]:checked:after {
-    content: "";
-    width: 18px;
-    height: 18px;
-    border-radius: 15px;
-    background-color: #448899;
-    display: inline-block;
-    border: 2px solid white;
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 15px;
+  background-color: #448899;
+  display: inline-block;
+  border: 2px solid white;
 }
 
-.booking-time{
-    position: relative;
-
+.booking-time {
+  position: relative;
 }
-.booking-time-morning{
-    position: relative;
-    position: absolute;
-    left: 110px;
-
+.booking-time-morning {
+  position: relative;
+  position: absolute;
+  left: 110px;
 }
-#morning-radio{
-    position: absolute;
-    left:-25px;
-
-
+#morning-radio {
+  position: absolute;
+  left: -25px;
 }
-.booking-time-afternoon{
-    position: relative;
-    left: 115px;
-
+.booking-time-afternoon {
+  position: relative;
+  left: 115px;
 }
-#afternoon-radio{
-    position: absolute;
-    left: -26px;
-
+#afternoon-radio {
+  position: absolute;
+  left: -26px;
 }
-.booking-price{
-    margin: 15px 0px;
+.booking-price {
+  margin: 15px 0px;
 }
 
-.booking-submit{
-    padding: 10px 20px;
-    background-color: #448899;
-    color: #FFFFFF;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-weight: 400;
-    font-size: 19px;
+.booking-submit {
+  padding: 10px 20px;
+  background-color: #448899;
+  color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 19px;
 }
-.booking-error-hint{
-    margin-top: 10px;
+.booking-error-hint {
+  margin-top: 10px;
 }
 
 /* info區塊 */
-.infos{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 50px 0px;
-    border-top:1px solid #E8E8E8 ;
+.infos {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 0px;
+  border-top: 1px solid #e8e8e8;
 }
-.address , .transport{
-    margin-bottom: 5px;
+.address,
+.transport {
+  margin-bottom: 5px;
 }
 /* footer 區塊 */
-footer{
-    height: 104px;
-    padding: 40px 0px;
-    text-align: center;
-    background-color: #757575;
-
+footer {
+  height: 104px;
+  padding: 40px 0px;
+  text-align: center;
+  background-color: #757575;
 }
 
-p.footer{
-    color:#FFFFFF;
-    font-weight: 700;
+p.footer {
+  color: #ffffff;
+  font-weight: 700;
 }
 
-@media screen and (max-width:1200px){
-    .nav-bar{
-        width: 90%;
-    }
-    section{
-        width: 90%;
-        flex-wrap: wrap;
-    }
-    .attraction-carousel{
-        width: 45%;
-    }
-    .attractionImg-container{
-        width: 100%;
-        height: 100%;
-    }
-    .attraction-image{
-        border-radius: 0px;
-    }
-    .profile{
-        width: 50%;
-        margin-left: 30px;
-        display: flex;
-        height: 100%;
-    }
-    .infos{
-        width: 90%;
-    }    
+@media screen and (max-width: 1200px) {
+  .nav-bar {
+    width: 90%;
+  }
+  section {
+    width: 90%;
+    flex-wrap: wrap;
+  }
+  .attraction-carousel {
+    width: 45%;
+  }
+  .attractionImg-container {
+    width: 100%;
+    height: 100%;
+  }
+  .attraction-image {
+    border-radius: 0px;
+  }
+  .profile {
+    width: 50%;
+    margin-left: 30px;
+    display: flex;
+    height: 100%;
+  }
+  .infos {
+    width: 90%;
+  }
 }
 
-@media screen and (max-width:700px) {
-    nav{
-        border-bottom:0px ;
-
-    }
-    .nav-bar{
-        width: 100%;
-    }
-    .nav-sitename{
-        padding: 0px 0px 0px 15px ;
-    }
-    section{
-        width: 100%;
-        flex-wrap: wrap;
-        border-top:0px;
-        padding-top: 0px;
-
-    }
-    .attraction-carousel{
-        width: 100%;
-    }
-    .attractionImg-container{
-        width: 100%;
-        height: 350px;
-    }
-    .profile{
-        width: 95%;
-        margin-left: 30px;
-        display: flex;
-        margin:30px auto;
-        height: 390px;
-        
-
-    }
-    .infos{
-        width: 90%;
-    } 
-
-    
+@media screen and (max-width: 700px) {
+  nav {
+    border-bottom: 0px;
+  }
+  .nav-bar {
+    width: 100%;
+  }
+  .nav-sitename {
+    padding: 0px 0px 0px 15px;
+  }
+  section {
+    width: 100%;
+    flex-wrap: wrap;
+    border-top: 0px;
+    padding-top: 0px;
+  }
+  .attraction-carousel {
+    width: 100%;
+  }
+  .attractionImg-container {
+    width: 100%;
+    height: 350px;
+  }
+  .profile {
+    width: 95%;
+    margin-left: 30px;
+    display: flex;
+    margin: 30px auto;
+    height: 390px;
+  }
+  .infos {
+    width: 90%;
+  }
 }

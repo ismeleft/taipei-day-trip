@@ -113,6 +113,8 @@ searchInput.addEventListener("keyup", (event) => {
 });
 
 //從api/atrractions抓資料
+const loadingIndicator = document.querySelector(".loading-indicator");
+
 function fetchData(url) {
   fetching = true;
   fetch(url)
@@ -122,7 +124,12 @@ function fetchData(url) {
       if (data.data.length === 0) {
         displayErrorMessage(`找不到 ${keyword} 的搜尋結果，請重試`);
       } else {
+        loadingIndicator.style.display = "flex";
+        setTimeout(() => {
+          loadingIndicator.style.display = "none";
+        }, 2000);
         getData(data);
+        loadingIndicator.style.display = "none";
       }
     })
     .catch((error) => {

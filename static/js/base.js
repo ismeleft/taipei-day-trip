@@ -20,10 +20,10 @@ signupToLogin.addEventListener("click", (e) => {
   dialogSinup.style.display = "none";
 });
 //會員註冊帳號
-let signup = document.querySelector(".signup-button");
+let signupForm = document.querySelector(".signup");
 let signupErrorHint = document.querySelector(".signup-error-hint");
 
-signup.addEventListener("click", (e) => {
+signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let signupName = document.querySelector(".signup-name").value;
   let signupEmail = document.querySelector(".signup-email").value;
@@ -57,9 +57,9 @@ signup.addEventListener("click", (e) => {
     });
 });
 //會員登入帳號
-let login = document.querySelector(".login-button");
+let loginForm = document.querySelector(".login");
 let loginErrorHint = document.querySelector(".login-error-hint");
-login.addEventListener("click", (e) => {
+loginForm.addEventListener("submit", (e) => {
   console.log(e.target);
   e.preventDefault();
   let loginEmail = document.querySelector(".login-email").value;
@@ -78,7 +78,6 @@ login.addEventListener("click", (e) => {
       return response.json();
     })
     .then(function (result) {
-      console.log(result);
       if (result.error) {
         loginErrorHint.innerHTML = result.message;
         loginErrorHint.style.color = "red";
@@ -103,41 +102,45 @@ closeWindowSignup.addEventListener("click", () => {
 });
 
 //確認使用者的狀態
-let logoutBtn = document.querySelector(".nav-button-logout");
-window.addEventListener("load", () => {
+let memberCenterBtn = document.querySelector(".nav-button-membercenter");
+window.addEventListener("DOMContentLoaded", () => {
   let storedToken = localStorage.getItem("token");
   if (!storedToken) {
     loginBtn.style.display = "block";
-    logoutBtn.style.display = "none";
+    memberCenterBtn.style.display = "none";
   } else {
-    fetch("/api/user/auth", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${storedToken}`,
-      },
-    })
-      .then(function (response) {
-        return response.json();
+    loginBtn.style.display = "none";
+    memberCenterBtn.style.display = "block";
+    if (window.location.pathname != "/booking") {
+      fetch("/api/user/auth", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
       })
-      .then(function (result) {
-        if (result.data == null) {
-          loginBtn.style.display = "block";
-          logoutBtn.style.display = "none";
-        } else {
-          loginBtn.style.display = "none";
-          logoutBtn.style.display = "block";
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (result) {
+          if (result.data == null) {
+            loginBtn.style.display = "block";
+            memberCenterBtn.style.display = "none";
+          } else {
+            loginBtn.style.display = "none";
+            memberCenterBtn.style.display = "block";
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   }
 });
 
-//登出清除localStorage
-logoutBtn.addEventListener("click", () => {
-  localStorage.removeItem("token");
-  window.location.reload();
+//點選會員中心跳轉
+memberCenterBtn.addEventListener("click", (e) => {
+  console.log(e.target);
+  window.location.href = "/membercenter";
 });
 
 //點選預定行程，確認用戶是否有登入

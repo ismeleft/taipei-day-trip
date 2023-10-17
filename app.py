@@ -10,6 +10,12 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
+db_password=os.getenv("db_password")
+db_user=os.getenv("db_user")
+key = "secret"
+partner_key=os.getenv("partner_key")
+
+
 app = Flask(__name__,
             static_folder='static',
             static_url_path='/static')
@@ -17,8 +23,8 @@ app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 db_config = {
-    "user": "root",
-    "password": "12345678",
+    "user": db_user,
+    "password": db_password,
     "host": "localhost",
     "database": "taipeiTrip"
 }
@@ -36,8 +42,6 @@ connection_pool = mysql.connector.pooling.MySQLConnectionPool(
 
 bcrypt = Bcrypt()
 
-key = "secret"
-partner_key=os.getenv("partner_key")
 
 
 
@@ -63,6 +67,11 @@ def booking():
 def thankyou():
     return render_template("thankyou.html")
 
+
+
+@app.route("/membercenter")
+def membercenter():
+    return render_template("membercenter.html")
 
 # api
 @app.route("/api/attractions")
@@ -513,8 +522,8 @@ def place_an_order():
             result = response.json()
 
             # print("Status Code:", response.status_code)
-            # print("Response JSON:",result)
-            print(result["status"])
+            print("Response JSON:",result)
+
 
             if result["status"] == 0:
                 query = "UPDATE orders SET status=%s WHERE order_number=%s"
@@ -557,4 +566,71 @@ def place_an_order():
     finally:
         conn.close()
         cursor.close()
+
+
+@app.route("/api/order")
+def get_ordernumber():
+    try:
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
+        #確認使用者是否有登入
+        token = request.headers.get("Authorization")
+        print(token)
+        if token:
+            token = token.split("Bearer ")[-1]
+            user = jwt.decode(token, key, algorithms="HS256")
+            users_id = user["id"]
+            print(users_id)
+            #如果有登入就去抓order table + trip table的資料
+            query="SELECT order_number,price, trip_id, date, time, contact_name ,contact_mail ,contact_phone ,status,name, address, images FROM orders inner join trip ON trip.id = orders.trip_id WHERE users_id =%s"
+            cursor.execute(query,(users_id,))
+            has_order=cursor.fetchall()
+            print(has_order)
+            orders_data=[]
+            for order in has_order:
+                order_dict={
+                    "data": {
+                        "number": order[0],
+                        "price": order[1],
+                        "trip": {
+                        "attraction": {
+                            "id": order[2],
+                            "name": order[9],
+                            "address": order[10],
+                            "image": order[11].split(',')[0],
+                        },
+                        "date": str(order[3]),
+                        "time": order[4]
+                        },
+                        "contact": {
+                        "name": order[5],
+                        "email": order[6],
+                        "phone": order[7]
+                        },
+                        "status": order[8]
+                    }
+                    
+                }
+                orders_data.append(order_dict)
+                # print(orders_data)
+            return jsonify(
+                orders_data),200
+        else:
+            return jsonify({
+                "error":True,
+                "message":"請登入後再進行操作"
+            }),403
+
+
+    except mysql.connector.Error as err:
+                return jsonify({
+            "error": True,
+            "message": "伺服器內部錯誤"
+        }), 500
+    finally:
+        conn.close()
+        cursor.close()
+
+
+
 app.run(host="0.0.0.0", port=3000)

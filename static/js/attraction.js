@@ -123,10 +123,10 @@ window.addEventListener("load", () => {
     bookingPrice.innerHTML = "新台幣 2500元";
   });
 });
-let startBooking = document.querySelector(".booking-submit");
+let startBookingForm = document.querySelector(".booking");
 let bookingDateInput = document.querySelector("#custom-calendar");
 
-startBooking.addEventListener("click", (e) => {
+startBookingForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   let storedToken = localStorage.getItem("token");

@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+section {
+  display: flex;
+  max-width: 1200px;
+  margin: 20px auto;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.membercenter-title {
+  color: #666;
+  font-weight: 500;
+
+  font-size: 19px;
+}
+
+.logout {
+  padding: 10px 20px;
+  background-color: #448899;
+  color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 16px;
+}
+.order_attraction_img {
+  width: 20vw;
+  height: 20vh;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.order_attraction_img:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.orderhistoty {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 30px auto;
+  max-width: 1200px;
+  flex: 1;
+}
+.noOrderhistory-hint {
+  display: none;
+}
+.order-item {
+  display: flex;
+  align-items: center;
+  color: #666;
+  font-size: 14px;
+  margin: 10px 0px;
+  padding: 20px 20px;
+  width: 100%;
+  border: rgb(255, 255, 255) 1px solid;
+  border-radius: 10px;
+  background-color: rgb(247, 247, 247);
+  box-shadow: 7px 7px 1px #448899;
+  line-height: 25px;
+}
+hr {
+  color: #757575;
+}
+/* footer 區塊 */
+footer {
+  height: 104px;
+  padding: 40px 0px;
+  text-align: center;
+  background-color: #757575;
+}
+
+p.footer {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1200px) {
+  section {
+    width: 90%;
+  }
+  .order-item {
+    width: 90vw;
+  }
+}
+@media screen and (max-width: 600px) {
+}

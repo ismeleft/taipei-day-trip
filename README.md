@@ -26,8 +26,9 @@ Taipei-day-trip is an e-commerce travel website that allows users to book itiner
     
 
 ## Architecture
+![Untitled diagram-2023-12-20-053427](https://github.com/ismeleft/taipei-day-trip/assets/76611330/cd1d9a37-fd00-4c8b-a449-025b32cc85ed)
 
-![Untitled diagram-2023-12-20-053045](https://github.com/ismeleft/taipei-day-trip/assets/76611330/71bfdc41-e6f7-4c25-9147-88e2eb175daa)
+
 
 
 

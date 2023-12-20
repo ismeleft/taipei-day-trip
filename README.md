@@ -43,7 +43,8 @@ Taipei-day-trip is an e-commerce travel website that allows users to book itiner
 
 ## Website Highlights
 - **Infinite scroll**
-  
+  ![index](https://github.com/ismeleft/taipei-day-trip/assets/76611330/c1b16ee3-ce97-4f36-ba5d-2f44745b07d8)
+
 
 
 

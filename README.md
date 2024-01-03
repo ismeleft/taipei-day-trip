@@ -21,7 +21,7 @@ Taipei-day-trip is an e-commerce travel website that allows users to book itiner
     |- | -| 
     | :----:|:----: |
     | Card Number | 4242 - 4242 - 4242 - 4242 |
-    | Valid Date |01 / 23  |
+    | Valid Date |01 / 28  |
     | CVV|123 | 
     
 

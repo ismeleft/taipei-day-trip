@@ -117,24 +117,25 @@ const loadingIndicator = document.querySelector(".loading-indicator");
 
 function fetchData(url) {
   fetching = true;
+  loadingIndicator.style.display = "flex";
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       fetching = false;
+      setTimeout(() => {
+        loadingIndicator.style.display = "none";
+      }, 500);
+
       if (data.data.length === 0) {
         displayErrorMessage(`找不到 ${keyword} 的搜尋結果，請重試`);
       } else {
-        loadingIndicator.style.display = "flex";
-        setTimeout(() => {
-          loadingIndicator.style.display = "none";
-        }, 2000);
         getData(data);
-        loadingIndicator.style.display = "none";
       }
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
       fetching = false;
+      loadingIndicator.style.display = "none";
     });
 }
 
